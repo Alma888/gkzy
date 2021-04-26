@@ -1,5 +1,6 @@
 package com.lj.gkzy.common.constant;
 
+<<<<<<< HEAD
 /**
  * 获取学校录取情况信息的常量类
  *
@@ -27,3 +28,7 @@ public class ObtainingScoreDataConstant {
      */
     public static final String BU_DATA_SOURCE_URL="https://www.gotopku.cn/programa/admitline/7/2020.html";
 }
+=======
+public class ObtainingScoreDataConstant {
+}
+>>>>>>> 56cf4b8fd30b46c88f22f7dee82adb89aa2718d4
