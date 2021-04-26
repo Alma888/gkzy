@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.gkzy.dao.ObtainingScoreDataDao">
+
+    <resultMap type="com.lj.gkzy.domain.dto.ObtainingScoreDataDO"
+               id="ObtainingScoreDataMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="year" column="year" jdbcType="VARCHAR"/>
+        <result property="provinces" column="provinces" jdbcType="VARCHAR"/>
+        <result property="admissionCategory" column="admission_category" jdbcType="VARCHAR"/>
+        <result property="divisionOfClass" column="division_of_class" jdbcType="VARCHAR"/>
+        <result property="batch" column="batch" jdbcType="VARCHAR"/>
+        <result property="theNameOfTheProfessional" column="the_name_of_the_professional" jdbcType="VARCHAR"/>
+        <result property="professionalDescription" column="professional_description" jdbcType="VARCHAR"/>
+        <result property="enrollment" column="enrollment" jdbcType="INTEGER"/>
+        <result property="highestScore" column="highest_score" jdbcType="NUMERIC"/>
+        <result property="lowestScore" column="lowest_score" jdbcType="NUMERIC"/>
+        <result property="averageScore" column="average_score" jdbcType="NUMERIC"/>
+        <result property="controlScore" column="control_score" jdbcType="NUMERIC"/>
+        <result property="theMinimumGap" column="the_minimum_gap" jdbcType="NUMERIC"/>
+        <result property="differenceOfAverage" column="difference_of_average" jdbcType="NUMERIC"/>
+        <result property="created" column="created" jdbcType="TIMESTAMP"/>
+        <result property="updated" column="updated" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ObtainingScoreDataMap">
+        select id,
+               year,
+               provinces,
+               admission_category,
+               division_of_class,
+               batch,
+               the_name_of_the_professional,
+               professional_description,
+               enrollment,
+               highest_score,
+               lowest_score,
+               average_score,
+               control_score,
+               the_minimum_gap,
+               difference_of_average,
+               created,
+               updated
+        from college_entrance_examination_volunteer_consultation.obtaining_score_data
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ObtainingScoreDataMap">
+        select id,
+               year,
+               provinces,
+               admission_category,
+               division_of_class,
+               batch,
+               the_name_of_the_professional,
+               professional_description,
+               enrollment,
+               highest_score,
+               lowest_score,
+               average_score,
+               control_score,
+               the_minimum_gap,
+               difference_of_average,
+               created,
+               updated
+        from college_entrance_examination_volunteer_consultation.obtaining_score_data
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ObtainingScoreDataMap">
+        select
+        id, year, provinces, admission_category, division_of_class, batch, the_name_of_the_professional,
+        professional_description, enrollment, highest_score, lowest_score, average_score, control_score,
+        the_minimum_gap, difference_of_average, created, updated
+        from college_entrance_examination_volunteer_consultation.obtaining_score_data
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="year != null and year != ''">
+                and year = #{year}
+            </if>
+            <if test="provinces != null and provinces != ''">
+                and provinces = #{provinces}
+            </if>
+            <if test="admissionCategory != null and admissionCategory != ''">
+                and admission_category = #{admissionCategory}
+            </if>
+            <if test="divisionOfClass != null and divisionOfClass != ''">
+                and division_of_class = #{divisionOfClass}
+            </if>
+            <if test="batch != null and batch != ''">
+                and batch = #{batch}
+            </if>
+            <if test="theNameOfTheProfessional != null and theNameOfTheProfessional != ''">
+                and the_name_of_the_professional = #{theNameOfTheProfessional}
+            </if>
+            <if test="professionalDescription != null and professionalDescription != ''">
+                and professional_description = #{professionalDescription}
+            </if>
+            <if test="enrollment != null">
+                and enrollment = #{enrollment}
+            </if>
+            <if test="highestScore != null">
+                and highest_score = #{highestScore}
+            </if>
+            <if test="lowestScore != null">
+                and lowest_score = #{lowestScore}
+            </if>
+            <if test="averageScore != null">
+                and average_score = #{averageScore}
+            </if>
+            <if test="controlScore != null">
+                and control_score = #{controlScore}
+            </if>
+            <if test="theMinimumGap != null">
+                and the_minimum_gap = #{theMinimumGap}
+            </if>
+            <if test="differenceOfAverage != null">
+                and difference_of_average = #{differenceOfAverage}
+            </if>
+            <if test="created != null">
+                and created = #{created}
+            </if>
+            <if test="updated != null">
+                and updated = #{updated}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into college_entrance_examination_volunteer_consultation.obtaining_score_data(year, provinces,
+                                                                                             admission_category,
+                                                                                             division_of_class, batch,
+                                                                                             the_name_of_the_professional,
+                                                                                             professional_description,
+                                                                                             enrollment, highest_score,
+                                                                                             lowest_score,
+                                                                                             average_score,
+                                                                                             control_score,
+                                                                                             the_minimum_gap,
+                                                                                             difference_of_average)
+        values (#{year}, #{provinces}, #{admissionCategory}, #{divisionOfClass}, #{batch}, #{theNameOfTheProfessional},
+                #{professionalDescription}, #{enrollment}, #{highestScore}, #{lowestScore}, #{averageScore},
+                #{controlScore}, #{theMinimumGap}, #{differenceOfAverage})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into college_entrance_examination_volunteer_consultation.obtaining_score_data(year, provinces,
+        admission_category, division_of_class, batch, the_name_of_the_professional, professional_description,
+        enrollment, highest_score, lowest_score, average_score, control_score, the_minimum_gap, difference_of_average,
+        created, updated)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.year}, #{entity.provinces}, #{entity.admissionCategory}, #{entity.divisionOfClass},
+            #{entity.batch}, #{entity.theNameOfTheProfessional}, #{entity.professionalDescription},
+            #{entity.enrollment}, #{entity.highestScore}, #{entity.lowestScore}, #{entity.averageScore},
+            #{entity.controlScore}, #{entity.theMinimumGap}, #{entity.differenceOfAverage}, #{entity.created},
+            #{entity.updated})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into college_entrance_examination_volunteer_consultation.obtaining_score_data(year, provinces,
+        admission_category, division_of_class, batch, the_name_of_the_professional, professional_description,
+        enrollment, highest_score, lowest_score, average_score, control_score, the_minimum_gap, difference_of_average,
+        created, updated)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.year}, #{entity.provinces}, #{entity.admissionCategory}, #{entity.divisionOfClass},
+            #{entity.batch}, #{entity.theNameOfTheProfessional}, #{entity.professionalDescription},
+            #{entity.enrollment}, #{entity.highestScore}, #{entity.lowestScore}, #{entity.averageScore},
+            #{entity.controlScore}, #{entity.theMinimumGap}, #{entity.differenceOfAverage}, #{entity.created},
+            #{entity.updated})
+        </foreach>
+        on duplicate key update
+        year = values(year) , provinces = values(provinces) , admission_category = values(admission_category) ,
+        division_of_class = values(division_of_class) , batch = values(batch) , the_name_of_the_professional =
+        values(the_name_of_the_professional) , professional_description = values(professional_description) , enrollment
+        = values(enrollment) , highest_score = values(highest_score) , lowest_score = values(lowest_score) ,
+        average_score = values(average_score) , control_score = values(control_score) , the_minimum_gap =
+        values(the_minimum_gap) , difference_of_average = values(difference_of_average) , created = values(created) ,
+        updated = values(updated)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update college_entrance_examination_volunteer_consultation.obtaining_score_data
+        <set>
+            <if test="year != null and year != ''">
+                year = #{year},
+            </if>
+            <if test="provinces != null and provinces != ''">
+                provinces = #{provinces},
+            </if>
+            <if test="admissionCategory != null and admissionCategory != ''">
+                admission_category = #{admissionCategory},
+            </if>
+            <if test="divisionOfClass != null and divisionOfClass != ''">
+                division_of_class = #{divisionOfClass},
+            </if>
+            <if test="batch != null and batch != ''">
+                batch = #{batch},
+            </if>
+            <if test="theNameOfTheProfessional != null and theNameOfTheProfessional != ''">
+                the_name_of_the_professional = #{theNameOfTheProfessional},
+            </if>
+            <if test="professionalDescription != null and professionalDescription != ''">
+                professional_description = #{professionalDescription},
+            </if>
+            <if test="enrollment != null">
+                enrollment = #{enrollment},
+            </if>
+            <if test="highestScore != null">
+                highest_score = #{highestScore},
+            </if>
+            <if test="lowestScore != null">
+                lowest_score = #{lowestScore},
+            </if>
+            <if test="averageScore != null">
+                average_score = #{averageScore},
+            </if>
+            <if test="controlScore != null">
+                control_score = #{controlScore},
+            </if>
+            <if test="theMinimumGap != null">
+                the_minimum_gap = #{theMinimumGap},
+            </if>
+            <if test="differenceOfAverage != null">
+                difference_of_average = #{differenceOfAverage},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+            <if test="updated != null">
+                updated = #{updated},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from college_entrance_examination_volunteer_consultation.obtaining_score_data
+        where id = #{id}
+    </delete>
+
+
+    <update id="truncateTable">
+        truncate table college_entrance_examination_volunteer_consultation.obtaining_score_data
+    </update>
+</mapper>

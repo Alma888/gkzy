@@ -1,0 +1,18 @@
+server:
+  port: 8001
+
+spring:
+  # 数据库连接配置
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/college_entrance_examination_volunteer_consultation?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# mybatis的相关配置
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
