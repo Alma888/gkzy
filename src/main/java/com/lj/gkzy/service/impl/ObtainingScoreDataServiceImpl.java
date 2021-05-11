@@ -5,18 +5,19 @@ import com.lj.gkzy.domain.model.ObtainingScoreDataModel;
 import com.lj.gkzy.service.ObtainingScoreDataService;
 import com.lj.gkzy.service.converter.ObtainingScoreDataModelConverter;
 import org.springframework.stereotype.Service;
+import static com.lj.gkzy.service.converter.ObtainingScoreDataModelConverter.*;
+import static com.lj.gkzy.service.converter.ObtainingScoreDataModelConverter.convertToObtainingScoreDataDO;
+
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.lj.gkzy.service.converter.ObtainingScoreDataModelConverter.*;
-
 /**
  * (ObtainingScoreDataModel)表服务实现类
  *
  * @author liujing
- * @since 2021-02-27 13:58:44
+ * @since 2021-04-03 13:58:44
  */
 @Service
 public class ObtainingScoreDataServiceImpl implements ObtainingScoreDataService {
@@ -62,6 +63,11 @@ public class ObtainingScoreDataServiceImpl implements ObtainingScoreDataService 
         return ObtainingScoreDataModel;
     }
 
+    @Override
+    public int insertBatch(List<ObtainingScoreDataModel> obtainingScoreDataModelList) {
+        return obtainingScoreDataDao.insertBatch(convertToObtainingScoreDataDOs(obtainingScoreDataModelList));
+    }
+
     /**
      * 修改数据
      *
@@ -88,5 +94,25 @@ public class ObtainingScoreDataServiceImpl implements ObtainingScoreDataService 
     @Override
     public void truncateTable() {
         obtainingScoreDataDao.truncateTable();
+    }
+
+    @Override
+    public List<ObtainingScoreDataModel> allRecommend(Integer score, Integer offset, Integer limit) {
+        return convertToObtainingScoreDataModels(obtainingScoreDataDao.allRecommend(score, offset, limit));
+    }
+
+    @Override
+    public List<ObtainingScoreDataModel> getRecommendTotalRecord(Integer score) {
+        return convertToObtainingScoreDataModels(obtainingScoreDataDao.getRecommendTotalRecord(score));
+    }
+
+    @Override
+    public List<ObtainingScoreDataModel> pageData(Integer offset, Integer limit) {
+        return convertToObtainingScoreDataModels(obtainingScoreDataDao.pageData(offset, limit));
+    }
+
+    @Override
+    public Integer totalPageData() {
+        return obtainingScoreDataDao.totalPageData().size();
     }
 }

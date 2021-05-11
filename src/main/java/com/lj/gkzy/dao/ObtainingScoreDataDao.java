@@ -86,4 +86,35 @@ public interface ObtainingScoreDataDao  {
      * 清空表
      */
     void truncateTable();
+
+    /**
+     * 志愿推荐
+     * @param score 用户分数
+     * @param offset 分页参数
+     * @param limit 分页参数
+     * @return 符合条件的List集合
+     */
+    List<ObtainingScoreDataDO> allRecommend(@Param("score") Integer score,@Param("offset") Integer offset, @Param("limit") Integer limit);
+
+    /**
+     * 获取所有小于用户分数的集合
+     * @param score 用户成绩
+     * @return 符合条件的集合
+     */
+    List<ObtainingScoreDataDO> getRecommendTotalRecord(@Param("score") Integer score);
+
+    /**
+     * 分页数据
+     * @param offset 分页参数
+     * @param limit 分页参数
+     * @return 符合的数据集合
+     */
+    List<ObtainingScoreDataDO> pageData(@Param("offset") Integer offset, @Param("limit") Integer limit);
+
+    /**
+     * 获取分页全部数据量
+     * @return 数据行数量
+     */
+    List<ObtainingScoreDataDO> totalPageData();
 }
+

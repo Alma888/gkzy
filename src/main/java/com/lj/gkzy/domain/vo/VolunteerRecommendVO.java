@@ -1,22 +1,20 @@
-package com.lj.gkzy.domain.model;
 
+/*
+ * Copyright (c) 2021 liujing.com
+ * All rights reserved.
+ *
+ */
+package com.lj.gkzy.domain.vo;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
- * (ObtainingScoreData)实体类
+ * 在这里编写类的功能描述
  *
  * @author liujing
- * @since 2021-04-03 13:58:42
+ * @created 2021/5/5
  */
 @Data
-public class ObtainingScoreDataModel implements Serializable {
-    /**
-     * 主键
-     */
-    private Integer id;
+public class VolunteerRecommendVO {
     /**
      * 学校名称
      */
@@ -77,20 +75,5 @@ public class ObtainingScoreDataModel implements Serializable {
      * 平均分差
      */
     private Double differenceOfAverage;
-    /**
-     * 创建时间
-     */
-    private Date created;
-    /**
-     * 更新时间
-     */
-    private Date updated;
-
-    /**
-     * 用以从学校+专业名称维度区分不同的数据
-     * @return schoolName + theNameOfTheProfessional
-     */
-    public String difference() {
-        return schoolName + theNameOfTheProfessional;
-    }
 }
+

@@ -1,6 +1,7 @@
 package com.lj.gkzy.service;
 
 import com.lj.gkzy.domain.model.ObtainingScoreDataModel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -38,6 +39,13 @@ public interface ObtainingScoreDataService {
     ObtainingScoreDataModel insert(ObtainingScoreDataModel ObtainingScoreDataModel);
 
     /**
+     * 批量插入数据
+     * @param obtainingScoreDataModelList 数据集合
+     * @return 影响的行数
+     */
+    int insertBatch(List<ObtainingScoreDataModel> obtainingScoreDataModelList);
+
+    /**
      * 修改数据
      *
      * @param ObtainingScoreDataModel 实例对象
@@ -57,4 +65,34 @@ public interface ObtainingScoreDataService {
      * 清空表
      */
     void truncateTable();
+    /**
+     * 推荐志愿service方法
+     * @param score 用户分数
+     * @param offset 分页参数
+     * @param limit 分页参数
+     * @return 符合条件的List集合
+     */
+    List<ObtainingScoreDataModel> allRecommend(Integer score, Integer offset, Integer limit);
+
+    /**
+     * 获取满足分数大于用户分数的记录行数量
+     * @param score 用户分数
+     * @return 符合条件的List集合
+     */
+    List<ObtainingScoreDataModel> getRecommendTotalRecord(Integer score);
+
+    /**
+     * 分页数据
+     * @param offset 分页参数
+     * @param limit 分页参数
+     * @return 数据集
+     */
+    List<ObtainingScoreDataModel> pageData(Integer offset, Integer limit);
+
+    /**
+     * 获取分页全部数据量
+     * @return 数据行数量
+     */
+    Integer totalPageData();
+
 }

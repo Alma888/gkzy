@@ -5,13 +5,22 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * (ObtainingScoreData)实体类
+ *
+ * @author liujing
+ * @since 2021-04-03 13:58:42
+ */
 @Data
 public class ObtainingScoreDataDO implements Serializable{
     /**
      * 主键
      */
     private Integer id;
+    /**
+     * 学校名称
+     */
+    private String schoolName;
     /**
      * 年份
      */
