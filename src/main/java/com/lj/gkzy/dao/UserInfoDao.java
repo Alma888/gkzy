@@ -19,7 +19,7 @@ public interface UserInfoDao {
      * @param id 主键
      * @return 实例对象
      */
-    UserInfoDO queryById(Long id);
+    UserInfoDO queryById(@Param("id") Long id);
 
     /**
      * 查询指定行数据

@@ -23,7 +23,7 @@ public interface ObtainingScoreDataDao  {
      * @param id 主键
      * @return 实例对象
      */
-    ObtainingScoreDataDO queryById(Integer id);
+    ObtainingScoreDataDO queryById(@Param("id") Integer id);
 
     /**
      * 查询指定行数据
