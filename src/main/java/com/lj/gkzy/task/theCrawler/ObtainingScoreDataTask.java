@@ -54,103 +54,16 @@ public class ObtainingScoreDataTask {
     public void refreshObtainingScoreData() throws IOException, InterruptedException {
         // 清空库 每天重新刷取
         obtainingScoreDataService.truncateTable();
-        Thread.sleep(1000000);
+        //Thread.sleep(1000000);
         // 刷取西安科技大学录取数据（普通）
         obtainingXustScoreData();
         //刷取西北工业大学录取数据 （985）
-         obtainingFactoryScoreData();
+         //obtainingFactoryScoreData();
         //刷取西北大学录取数据 （211）
-        obtainingXiBeiScoreData();
+        //obtainingXiBeiScoreData();
     }
 
 
-    /**
-     * 刷取西北工业大学的录取数据并落库
-     */
-
-    public void obtainingFactoryScoreData() throws IOException {
-        try {
-            log.info("==============开始获取【西北工业大学】录取信息==================");
-            CloseableHttpClient client = HttpClientBuilder.create().build();
-            String cookie = getCookie(Factory_HOME_PAGE_URL);
-            HttpGet request = new HttpGet(Factory_HOME_PAGE_URL);
-            request.setHeader("Cookie", cookie);
-            CloseableHttpResponse response = client.execute(request);
-            String resultStr = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-            // 所有的省份集合
-            List<String> provincesList = new ArrayList<>();
-
-            // 所有的年份集合
-            List<String> yearList = new ArrayList<>();
-
-            // 所有的科目种类集合
-            List<String> divisionOfClassList = new ArrayList<>();
-
-            //所有类型集合
-            List<String> typeList=new ArrayList<>();
-
-            Document parse = Jsoup.parse(resultStr);
-            // 解析科目种类
-            Elements klmc = parse.getElementsByClass("klmc");
-            klmc.forEach(a -> divisionOfClassList.add(a.text()));
-            // 解析年份
-            Elements zsnf = parse.getElementsByClass("zsnf");
-            zsnf.forEach(a -> yearList.add(a.text()));
-            // 解析省份
-            Elements ssmc = parse.getElementsByClass("ssmc");
-            ssmc.forEach(a -> provincesList.add(a.text()));
-            //解析类型
-            Elements zslx = parse.getElementsByAttribute("zslx");
-            zslx.forEach(a ->typeList.add(a.text()));
-
-            List<ObtainingScoreDataModel> obtainingScoreDataList = new ArrayList<>();
-            for (String divisionOfClass : divisionOfClassList) {
-                for (String year : yearList) {
-                    for (String provinces : provincesList) {
-                        for (String type : typeList) {
-                            HttpGet getDataRequest = new HttpGet(String.format(Factory_DATA_SOURCE_URL, year, divisionOfClass, provinces,type));
-                            setHeaders(getDataRequest);
-                            getDataRequest.setHeader("Cookie", cookie);
-                            String result = EntityUtils.toString(client.execute(getDataRequest).getEntity(), StandardCharsets.UTF_8);
-                            Document data = Jsoup.parse(result);
-                            Element tbody = data.getElementsByTag("tbody").get(1);
-                            Elements tr = tbody.getElementsByTag("tr");
-                            for (Element element : tr) {
-                                ObtainingScoreDataModel obtainingScoreDataModel = new ObtainingScoreDataModel();
-                                List<String> properties = new ArrayList<>();
-                                Elements td = element.getElementsByTag("td");
-                                for (Element element1 : td) {
-                                    properties.add(element1.text());
-                                }
-                                if (properties.size() != 10) {
-                                    continue;
-                                }
-                                obtainingScoreDataModel.setSchoolName(Factory_SCHOOL_NAME);
-                                obtainingScoreDataModel.setYear(properties.get(0));
-                                obtainingScoreDataModel.setProvinces(properties.get(1));
-                                obtainingScoreDataModel.setAdmissionCategory(properties.get(3));
-                                obtainingScoreDataModel.setDivisionOfClass(properties.get(2));
-                                obtainingScoreDataModel.setTheNameOfTheProfessional(properties.get(4));
-                                obtainingScoreDataModel.setHighestScore(getScore(properties.get(8)));
-                                obtainingScoreDataModel.setLowestScore(getScore(properties.get(5)));
-                                obtainingScoreDataModel.setAverageScore(getScore(properties.get(7)));
-                                obtainingScoreDataModel.setControlScore(getScore(properties.get(9)));
-                                obtainingScoreDataList.add(obtainingScoreDataModel);
-                            }
-                            log.info(String.format("%s:科目:[%s],年份:[%s],省份:[%s]获取数据完毕", Factory_SCHOOL_NAME, divisionOfClass, year, provinces));
-                        }
-                    }
-                }
-            }
-            log.info(String.format("==============读取到的数据数%d=========", obtainingScoreDataList.size()));
-            obtainingScoreDataService.insertBatch(obtainingScoreDataList);
-            client.close();
-            log.info("==============【西北工业大学】录取信息获取结束==================");
-        } catch (IOException e) {
-            log.error("ObtainingScoreDataTask.obtainingFactoryScoreData | 定时任务获取Factory录取数据时发生异常, e=", e);
-            throw e;
-        }
-    }
 
 
     /**
@@ -164,7 +77,7 @@ public class ObtainingScoreDataTask {
             HttpGet request = new HttpGet(XUST_HOME_PAGE_URL);
             request.setHeader("Cookie", cookie);
             //解决https证书安全认证问题
-            request.setHeader("Cookie", "JSESSIONID=2FD7CD8756C551DAE242E51D1F411BAB");
+            //request.setHeader("Cookie", "JSESSIONID=2FD7CD8756C551DAE242E51D1F411BAB");
             CloseableHttpResponse response = client.execute(request);
             String resultStr = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             // 所有的科目种类集合
@@ -230,103 +143,6 @@ public class ObtainingScoreDataTask {
             log.info("==============【西安科技大学】录取信息获取结束==================");
         } catch (IOException e) {
             log.error("ObtainingScoreDataTask.obtainingXustScoreData | 定时任务获取xust录取数据时发生异常, e=", e);
-            throw e;
-        }
-    }
-
-
-    /**
-     * 刷取西北大学的录取数据并落库
-     */
-    public void obtainingXiBeiScoreData() throws IOException {
-        try {
-            log.info("=============开始获取【西北大学】录取信息=================");
-            CloseableHttpClient client = HttpClientBuilder.create().build();
-            String cookie = getCookie(XiBei_HOME_PAGE_URL);
-            HttpGet request = new HttpGet(XiBei_HOME_PAGE_URL);
-            request.setHeader("Cookie", cookie);
-            //解决https证书安全认证问题
-            request.setHeader("Cookie", "JSESSIONID=2FD7CD8756C551DAE242E51D1F411BAB");
-            CloseableHttpResponse response = client.execute(request);
-            String resultStr = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-
-            // 所有的科目种类集合
-            List<String> divisionOfClassList = new ArrayList<>();
-            // 所有的年份集合
-            List<String> yearList = new ArrayList<>();
-            // 所有的省份集合
-            List<String> provincesList = new ArrayList<>();
-            //所有的批次集合
-            List<String> batchList=new ArrayList<>();
-            //所有类型集合
-            List<String> typeList=new ArrayList<>();
-
-            Document parse = Jsoup.parse(resultStr);
-            // 解析科目种类
-            Elements scienceClass = parse.getElementsByAttribute("scienceClass");
-            scienceClass.forEach(option -> divisionOfClassList.add(option.text()));
-            // 解析年份
-            Elements years = parse.getElementsByAttribute("year");
-            years.forEach(option -> yearList.add(option.text()));
-            // 解析省份
-            Elements cityName = parse.getElementsByAttribute("cityName ");
-            cityName.forEach(option -> provincesList.add(option.text()));
-            //解析类型（普通文理）
-            Elements type = parse.getElementsByAttribute("type ");
-            type.forEach(option ->typeList.add(option.text()));
-            //解析录取批次
-            Elements batch = parse.getElementsByAttribute("batch ");
-            batch.forEach(option -> batchList.add(option.text()));
-
-            List<ObtainingScoreDataModel> obtainingScoreDataList = new ArrayList<>();
-            for (String divisionOfClass : divisionOfClassList) {
-                for (String year : yearList) {
-                    for (String provinces : provincesList) {
-                        for (String types : typeList) {
-                            for (String batches : batchList) {
-                                    HttpGet getDataRequest = new HttpGet(String.format(XiBei_DATA_SOURCE_URL, year, divisionOfClass, provinces, types,batches));
-                                    setHeaders(getDataRequest);
-                                    getDataRequest.setHeader("Cookie", cookie);
-                                    String result = EntityUtils.toString(client.execute(getDataRequest).getEntity(), StandardCharsets.UTF_8);
-                                    Document data = Jsoup.parse(result);
-                                    Element tbody = data.getElementsByTag("tbody").get(1);
-                                    Elements tr = tbody.getElementsByTag("tr");
-                                    for (Element element : tr) {
-                                        ObtainingScoreDataModel obtainingScoreDataModel = new ObtainingScoreDataModel();
-                                        List<String> properties = new ArrayList<>();
-                                        Elements td = element.getElementsByTag("td");
-                                        for (Element element1 : td) {
-                                            properties.add(element1.text());
-                                        }
-                                        if (properties.size() != 9) {
-                                            continue;
-                                        }
-                                        obtainingScoreDataModel.setSchoolName(XiBei_SCHOOL_NAME);
-                                        obtainingScoreDataModel.setYear(year);
-                                        obtainingScoreDataModel.setProvinces(provinces);
-                                        obtainingScoreDataModel.setAdmissionCategory(types);
-                                        obtainingScoreDataModel.setDivisionOfClass(divisionOfClass);
-                                        obtainingScoreDataModel.setBatch(properties.get(2));
-                                        obtainingScoreDataModel.setTheNameOfTheProfessional(properties.get(1));
-                                        obtainingScoreDataModel.setLowestScore(getScore(properties.get(4)));
-                                        obtainingScoreDataModel.setAverageScore(getScore(properties.get(6)));
-                                        obtainingScoreDataModel.setControlScore(getScore(properties.get(3)));
-                                        obtainingScoreDataModel.setTheMinimumGap(getScore(properties.get(9)));
-                                        obtainingScoreDataModel.setDifferenceOfAverage(getScore(properties.get(8)));
-                                        obtainingScoreDataList.add(obtainingScoreDataModel);
-                                    }
-                                    log.info(String.format("%s:科目:[%s],年份:[%s],省份:[%s]获取数据完毕",XiBei_SCHOOL_NAME, divisionOfClass, year, provinces));
-                                }
-                            }
-                        }
-                    }
-                }
-            log.info(String.format("==============读取到的数据数%d=========", obtainingScoreDataList.size()));
-            obtainingScoreDataService.insertBatch(obtainingScoreDataList);
-            client.close();
-            log.info("========【西北大学】录取信息获取结束======");
-        } catch (IOException e) {
-            log.error("ObtainingScoreDataTask.obtainingXiBeiScoreData | 定时任务获取XiBei录取数据时发生异常, e=", e);
             throw e;
         }
     }
