@@ -148,5 +148,4 @@
         from college_entrance_examination_volunteer_consultation.user_info
         where id = #{id}
     </delete>
-
 </mapper>

@@ -2,6 +2,7 @@ package com.lj.gkzy.dao;
 
 import com.lj.gkzy.domain.dto.ObtainingScoreDataDO;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public interface ObtainingScoreDataDao  {
      * @param id 主键
      * @return 实例对象
      */
-    ObtainingScoreDataDO queryById(@Param("id") Integer id);
+    ObtainingScoreDataDO queryById(@Param("id")Integer id);
 
     /**
      * 查询指定行数据

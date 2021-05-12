@@ -4,6 +4,7 @@ import com.lj.gkzy.dao.ObtainingScoreDataDao;
 import com.lj.gkzy.domain.model.ObtainingScoreDataModel;
 import com.lj.gkzy.service.ObtainingScoreDataService;
 import com.lj.gkzy.service.converter.ObtainingScoreDataModelConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static com.lj.gkzy.service.converter.ObtainingScoreDataModelConverter.*;
 import static com.lj.gkzy.service.converter.ObtainingScoreDataModelConverter.convertToObtainingScoreDataDO;
