@@ -55,7 +55,7 @@ public class ObtainingScoreDataTask {
     public void refreshObtainingScoreData() throws IOException, InterruptedException {
         // 清空库 每天重新刷取
         obtainingScoreDataService.truncateTable();
-        Thread.sleep(10000);
+        // Thread.sleep(10000);
         // 刷取西安科技大学录取数据（普通）
         obtainingXustScoreData();
         //刷取西北工业大学录取数据 （985）
