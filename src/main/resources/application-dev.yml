@@ -1,13 +1,25 @@
 server:
-  port: 8080
+  port: 9090
+  servlet:
+    context-path: /
 
 spring:
+  web:
+    resources:
+      static-locations:
+      ["classpath:/resources/,classpath:/templates/,classpath:/static/"]
+  mvc:
+    static-path-pattern: /*
+
   datasource:
     #   数据源基本配置
     url: jdbc:mysql://127.0.0.1:3306/college_entrance_examination_volunteer_consultation?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone = GMT
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
 
 # mybatis的相关配置
 mybatis:

@@ -1,0 +1,203 @@
+
+<script src="js/jquery.validate.js"></script>
+<link rel="stylesheet" href="js/layer/theme/default/layer.css"/>
+<script src="js/layer/layer.js"></script>
+<link rel="stylesheet" href="js/umeditor/themes/default/css/umeditor.css"/>
+<script src="js/umeditor/umeditor.config.js"></script>
+<script src="js/umeditor/umeditor.min.js"></script>
+
+<div style="padding: 10px" class="admin-content">
+
+
+    <div class="container"><!-- 使用bootstrap css框架，container定宽，并剧中 https://v3.bootcss.com/css/#overview-container -->
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                编辑调音师:
+            </div>
+            <div class="panel-body">
+                <form action="tiaoyinshiupdate.do" method="post" name="form1" id="form1"><!-- form 标签开始 -->
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">账户名<span
+                                    style="color: red;">*</span></label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control" placeholder="输入账户名" style="width:150px;"
+                                       data-rule-required="true" data-msg-required="请填写账户名"
+                                       remote="checkno.do?checktype=update&id=${mmm.id}&table=tiaoyinshi&col=zhanghuming"
+                                       data-msg-remote="内容重复了" id="zhanghuming" name="zhanghuming"
+                                       value="${Info.html(mmm.zhanghuming)}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">调音师姓名</label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control" placeholder="输入调音师姓名" style="width:150px;"
+                                       id="tiaoyinshixingming" name="tiaoyinshixingming"
+                                       value="${Info.html(mmm.tiaoyinshixingming)}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">调音师性别</label>
+                            <div class="col-sm-10">
+
+                                <select class="form-control class_tiaoyinshixingbie8"
+                                        data-value="${Info.html(mmm.tiaoyinshixingbie)}" id="tiaoyinshixingbie"
+                                        name="tiaoyinshixingbie" style="width:250px">
+                                    <option value="男">男</option>
+                                    <option value="女">女</option>
+
+                                </select>
+                                <script>
+                                    $(".class_tiaoyinshixingbie8").val($(".class_tiaoyinshixingbie8").attr("data-value"))</script>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">联系手机</label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control" placeholder="输入联系手机" style="width:150px;"
+                                       phone="true" data-msg-phone="请输入正确手机号码" id="lianxishouji" name="lianxishouji"
+                                       value="${Info.html(mmm.lianxishouji)}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">联系邮箱</label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control" placeholder="输入联系邮箱" style="width:150px;"
+                                       email="true" data-msg-email="请输入有效邮件地址" id="lianxiyouxiang" name="lianxiyouxiang"
+                                       value="${Info.html(mmm.lianxiyouxiang)}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">激活状态</label>
+                            <div class="col-sm-10">
+
+                                <select class="form-control class_jihuozhuangtai9"
+                                        data-value="${Info.html(mmm.jihuozhuangtai)}" id="jihuozhuangtai"
+                                        name="jihuozhuangtai" style="width:250px">
+                                    <option value="上班">上班</option>
+                                    <option value="休息">休息</option>
+
+                                </select>
+                                <script>
+                                    $(".class_jihuozhuangtai9").val($(".class_jihuozhuangtai9").attr("data-value"))</script>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">服务区域</label>
+                            <div class="col-sm-10">
+
+                                <select class="form-control class_fuwuquyu10" data-value="${Info.html(mmm.fuwuquyu)}"
+                                        id="fuwuquyu" name="fuwuquyu" style="width:250px">
+                                    <ssm:sql var="select"
+                                             type="select">SELECT * FROM quyuweizhi ORDER BY id desc</ssm:sql>
+                                    <c:forEach items="${select}" var="m">
+                                        <option value="${m.id}">${m.quyumingcheng}</option>
+                                    </c:forEach>
+
+                                </select>
+                                <script>
+                                    $(".class_fuwuquyu10").val($(".class_fuwuquyu10").attr("data-value"))</script>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">调音师头像</label>
+                            <div class="col-sm-10">
+
+                                <div class="input-group" style="width:250px">
+                                    <input type="text" class="form-control" id="tiaoyinshitouxiang"
+                                           name="tiaoyinshitouxiang" value="${Info.html(mmm.tiaoyinshitouxiang)}"/>
+
+                                    <span class="input-group-btn"><button type="button" class="btn btn-default"
+                                                                          onclick="layer.open({type:2,title:'上传图片',fixed:true,shadeClose:true,shade:0.5,area:['320px','150px'],content:'upload.html?result=tiaoyinshitouxiang'})">
+    上传图片
+</button></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">调音师简介</label>
+                            <div class="col-sm-10">
+
+                                <textarea id="tiaoyinshijianjie" name="tiaoyinshijianjie"
+                                          style="max-width: 750px;width:100%; height: 300px;">${Info.html(mmm.tiaoyinshijianjie)}</textarea>
+                                <script>
+                                    (function () {
+                                        var um = UM.getEditor('tiaoyinshijianjie');
+                                    })();
+                                </script>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs"> </label>
+                            <div class="col-sm-10">
+
+                                <input name="id" value="${mmm.id}" type="hidden"/>
+                                <input name="referer" value="?" type="hidden"/>
+                                <input name="updtself" value="${updtself}" type="hidden"/>
+
+
+                                <button type="submit" class="btn btn-primary" name="Submit">
+                                    提交
+                                </button>
+                                <button type="reset" class="btn btn-default" name="Submit2">
+                                    重置
+                                </button>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--form标签结束--></form>
+            </div>
+        </div>
+
+        <!-- container定宽，并剧中结束 --></div>
+
+
+    <script>
+        $(function () {
+            $('#form1').validate();
+        });
+    </script>
+
+
+</div>
+<%@ include file="foot.jsp" %>

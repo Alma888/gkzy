@@ -25,7 +25,7 @@ body{
 }
 
 .layui-form-switch{
-    margin-top: 0px;
+    margin-top: 10px;
 }
 .layui-input:focus, .layui-textarea:focus {
     border-color: #189f92!important;
@@ -78,7 +78,7 @@ body{
 }
 .page .pagination li.active span{
     background: #009688;
-    color: #fff;
+    color: #f2f2f2;
     border: 1px solid #009688;
 
 }
@@ -88,7 +88,7 @@ body{
 .container{
     width: 100%;
     height: 45px;
-    background-color: #222;
+    background-color: #315672;
 }
 .container a,.layui-nav .layui-nav-item a{
     color: #fff;
@@ -104,10 +104,10 @@ body{
     width: 200px;
 }
 .container .right{
-    background-color:rgba(0,0,0,0);
-    float: right;
+     background-color:rgba(0,0,0,0);
+     float: right;
 
-}
+ }
 .container .left_open{
     height: 45px;
     float: left;
@@ -128,11 +128,11 @@ body{
     background: rgba(255,255,255,0.3);
 }
 
-.container .left{
-    background-color:rgba(0,0,0,0);
-    float: left;
+/*.container .left{*/
+    /*background-color:rgba(0,0,0,0);*/
+    /*float: left;*/
 
-}
+/*}*/
 .container .layui-nav-item{
     line-height: 45px;
 }
@@ -188,9 +188,9 @@ body{
     transition: all 0.3s;
 }
 .left-nav a:hover{
-    background: #009688 !important;
+    background: #9fd3f1 !important;
     color: #fff;
-    border-color:  #04564e !important;
+    border-color: #9fd3f1 !important;
 }
 .left-nav a.active{
     background: #009688 !important;
@@ -215,7 +215,7 @@ body{
 }
 .left-nav #nav li .sub-menu li:hover{
     /*color: blue;*/
-     /*background: #fff ;*/
+    /*background: #fff ;*/
 }
 .left-nav #nav li .sub-menu li a{
     padding: 12px 15px 12px 30px;
@@ -373,7 +373,7 @@ table th, table td {
 .fly-none .layui-icon {
     line-height: 300px;
     font-size: 300px;
-    color: #393D49;
+    color: #009688;
 }
 .fly-none p {
     margin-top: 50px;
@@ -397,7 +397,7 @@ table th, table td {
     top: 36px;
     bottom: 0px;
     width: 100%;
-    background:rgb(255, 255, 255,0);
+    background:rgb(255,255,255);
     padding: 0px;
     overflow: hidden;
     display: none;
@@ -487,7 +487,7 @@ table th, table td {
     font-size: 12px;
 }
 .x-admin-sm  .layui-breadcrumb>*{
-   font-size: 12px;
+    font-size: 12px;
 }
 .x-admin-sm  .layui-btn,.x-admin-sm .layui-btn-xs,.x-admin-sm .layui-btn-sm{
     font-size: 12px;
@@ -525,6 +525,6 @@ table th, table td {
 .x-admin-sm .fly-none .layui-icon {
     line-height: 300px;
     font-size: 300px;
-    color: #393D49;
+    color: #393d49;
 }
 

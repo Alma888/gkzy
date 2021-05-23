@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <TITLE>高效录取分数查询</TITLE>
+    <link rel="stylesheet" href="images/hsgcommon/common.css" type="text/css">
+    <link rel="stylesheet" href="images/hsgcommon/div.css" type="text/css">
+    <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js" charset="gb2312"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr valign="top">
+        <td>
+            <table width="100%" border="0" align="center" cellpadding="4" cellspacing="1" bgcolor="#aec3de">
+                <tr align="left" bgcolor="#F2FDFF">
+                    <td height="30" colspan="17" background="images/table_header.gif">院校录取分数列表</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr valign="top">
+        <td bgcolor="#FFFFFF">
+            <table width="100%" border="1" align="center" cellpadding="4" cellspacing="1" bgcolor="#aec3de">
+
+                <tr align="right" bgcolor="#ebf0f7">
+                    <td colspan="21">
+                        <table width="100%" border="0" align="center" cellpadding="4" cellspacing="1" >
+                            <tr align="left" >
+                                <td colspan="17">
+                                    <form action="yuanxiaoluqufenshuList.do" name="myform" method="post">
+                                        查询   院校名称：<input name="yuanxiaomingcheng" type="text" id="yuanxiaomingcheng" class="form-control2" />
+                                        院校类型：<input name="yuanxiaoleixing" type="text" id="yuanxiaoleixing" class="form-control2" />
+                                        院校性质：<input name="yuanxiaoxingzhi" type="text" id="yuanxiaoxingzhi" class="form-control2" />
+                                        考生类别：<select name='kaoshengleibie' id='kaoshengleibie' class="form-control2"><option value="">所有</option><%=connDbBean.hsggetoption("kaoshengleibieguanli","kaoshengleibie")%></select>
+                                        志愿：<input name="zhiyuan" type="text" id="zhiyuan" class="form-control2" />
+                                        录取最高分：<input name="luquzuigaofen" type="text" id="luquzuigaofen" class="form-control2" />
+                                        录取人数：<input name="luqurenshu" type="text" id="luqurenshu" class="form-control2" />
+                                        录取批次：<input name="luqupici" type="text" id="luqupici" class="form-control2" />
+                                        录取年份：<input name="luqunianfen" type="text" id="luqunianfen" class="form-control2" />
+                                        <input type="submit" value="查询" class="btn btn-info btn-small" />
+                                    </form>								</td>
+                            </tr></table>
+                    </td>
+                </tr>
+
+                <tr align="center">
+                    <td style="padding-left:0px; padding-right:0px;"><table width="100%" border="1" align="center" cellpadding="4" cellspacing="1" bgcolor="#ebf0f7">
+                        <tr>
+                            <td align="center" bgcolor="#ebf0f7" width="30px" height="30">序号</td>
+                            <td align='center' bgcolor='#ebf0f7'>院校名称</td>
+                            <td align='center' bgcolor='#ebf0f7'>院校类型</td>
+                            <td align='center' bgcolor='#ebf0f7'>院校性质</td>
+                            <td align='center' bgcolor='#ebf0f7'>考生类别</td>
+                            <td align='center' bgcolor='#ebf0f7'>志愿</td>
+                            <td align='center' bgcolor='#ebf0f7'>录取最高分</td>
+                            <td align='center' bgcolor='#ebf0f7'>录取最低分</td>
+                            <td align='center' bgcolor='#ebf0f7'>录取平均分</td>
+                            <td align='center' bgcolor='#ebf0f7'>录取人数</td>
+                            <td align='center' bgcolor='#ebf0f7'>录取批次</td>
+                            <td align='center' bgcolor='#ebf0f7'>录取年份</td>
+
+
+                            <td align="center" bgcolor="#ebf0f7" width="150px"> 添加时间 </td>
+                            <td align="center" bgcolor="#ebf0f7" width="150px"> 操作 </td>
+                        </tr>
+                        <%
+                        int i=0;
+                        %>
+                        <c:forEach items="${list }" var="u">
+                            <%
+                            i++;
+                            %>
+                            <tr align="center" bgcolor="#FFFFFF">
+                                <td align="center"><%=i%></td>
+                                <td>${u.yuanxiaomingcheng}</td>
+                                <td>${u.yuanxiaoleixing}</td>
+                                <td>${u.yuanxiaoxingzhi}</td>
+                                <td>${u.kaoshengleibie}</td>
+                                <td>${u.zhiyuan}</td>
+                                <td>${u.luquzuigaofen}</td>
+                                <td>${u.luquzuidifen}</td>
+                                <td>${u.luqupingjunfen}</td>
+                                <td>${u.luqurenshu}</td>
+                                <td>${u.luqupici}</td>
+                                <td>${u.luqunianfen}</td>
+
+
+                                <td align="center"> ${u.addtime } </td>
+                                <td align="center"><a class="btn btn-info btn-small" href="doUpdateYuanxiaoluqufenshu.do?id=${u.id }">编辑</a>  <a class="btn btn-info btn-small" href="deleteYuanxiaoluqufenshu.do?id=${u.id }"
+                                                                                                                                                 onclick="{if(confirm('确定要删除吗?')){return true;}return false;}">删除</a> <a class="btn btn-info btn-small" href="yxlqfsDetail.do?id=${u.id}" target="_blank">详细</a></td>
+                            </tr>
+                        </c:forEach>
+                    </table></td>
+                </tr>
+            </table>
+
+
+        </td>
+    </tr>
+</table>
+
+
+
+<p align="center" class="fy"> <c:if test="${sessionScope.p==1 }">
+    <c:if test="${page.page>1}">
+        <a href="yuanxiaoluqufenshuList.do?page=1" >首页</a>
+        <a href="yuanxiaoluqufenshuList.do?page=${page.page-1 }"> 上一页</a>             </c:if>
+    <c:if test="${page.page<page.totalPage}">
+        <a href="yuanxiaoluqufenshuList.do?page=${page.page+1 }">下一页</a>
+        <a href="yuanxiaoluqufenshuList.do?page=${page.totalPage }">末页</a>		    </c:if>
+</c:if>
+</p>
+
+
+
+
+
+</body>
+</html>
+
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<TITLE>录取分数线展示</TITLE>-->
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <!--<script src="js/jquery.js"></script>-->
+    <!--<script src="js/jquery.validate.js"></script>-->
+    <!--<script src="js/highcharts/highcharts.js"></script>-->
+    <!--<script src="js/highcharts/modules/exporting.js"></script>-->
+    <!--<script src="js/highcharts/modules/series-label.js"></script>-->
+    <!--<script src="js/highcharts/modules/oldie.js"></script>-->
+<!--</head>-->
+
+
+<!--<body>-->
+<!--<div style="padding: 10px" class="admin-content">-->
+
+
+    <!--<div class="panel panel-default">-->
+        <!--<div class="panel-heading">-->
+        <!--<span class="module-name">-->
+            <!--调音师        </span>-->
+            <!--<span>列表</span>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+            <!--<div class="pa10 bg-warning">-->
+                <!--<form class="form-inline" id="formSearch" action="?">&lt;!&ndash; form 标签开始 &ndash;&gt;-->
+
+                    <!--<div class="form-group">-->
+
+
+                        <!--<i class="glyphicon glyphicon-search"></i>-->
+
+                    <!--</div>-->
+
+                    <!--<div class="form-group">-->
+                        <!--学校名称<input type="text" class="form-control" style="" name="xuexiaomingcheng"-->
+                               <!--value="学校名称"/>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--专业名称<input type="text" class="form-control" style="" name="zhuanyemingcheng"-->
+                               <!--value="专业名称"/>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--年份<input type="text" class="form-control" style="" name="nianfen"-->
+                                   <!--value="nianfen"/>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                        <!--&lt;!&ndash;服务评分&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<input type="text" class="form-control" style="width:80px;" name="fuwupingfen_start"&ndash;&gt;-->
+                               <!--&lt;!&ndash;value="${param.fuwupingfen_start}"/>-<input type="text" class="form-control"&ndash;&gt;-->
+                                                                           <!--&lt;!&ndash;style="width:80px;" name="fuwupingfen_end"&ndash;&gt;-->
+                                                                           <!--&lt;!&ndash;value="${param.fuwupingfen_end}"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                        <!--&lt;!&ndash;状态&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<select class="form-control class_zhuangtai6" data-value="${param.zhuangtai}" id="zhuangtai"&ndash;&gt;-->
+                                <!--&lt;!&ndash;name="zhuangtai">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="">请选择</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="空闲中">空闲中</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="已接单">已接单</option>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<script>&ndash;&gt;-->
+                            <!--&lt;!&ndash;$(".class_zhuangtai6").val($(".class_zhuangtai6").attr("data-value"))</script>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                        <!--&lt;!&ndash;激活状态&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<select class="form-control class_jihuozhuangtai2" data-value="${param.jihuozhuangtai}"&ndash;&gt;-->
+                                <!--&lt;!&ndash;id="jihuozhuangtai" name="jihuozhuangtai">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="">请选择</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="上班">上班</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="休息">休息</option>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<script>&ndash;&gt;-->
+                            <!--&lt;!&ndash;$(".class_jihuozhuangtai2").val($(".class_jihuozhuangtai2").attr("data-value"))</script>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                        <!--&lt;!&ndash;服务区域&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<select class="form-control class_fuwuquyu3" data-value="${param.fuwuquyu}" id="fuwuquyu"&ndash;&gt;-->
+                                <!--&lt;!&ndash;name="fuwuquyu">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="">请选择</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<ssm:sql var="select" type="select">SELECT * FROM quyuweizhi ORDER BY id desc</ssm:sql>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<c:forEach items="${select}" var="m">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<option value="${m.id}">${m.quyumingcheng}</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</c:forEach>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<script>&ndash;&gt;-->
+                            <!--&lt;!&ndash;$(".class_fuwuquyu3").val($(".class_fuwuquyu3").attr("data-value"))</script>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--<button type="submit" class="btn btn-default">-->
+                        <!--搜索-->
+                    <!--</button>-->
+
+
+                    <!--&lt;!&ndash;form标签结束&ndash;&gt;</form>-->
+            <!--</div>-->
+
+
+            <!--<div class="list-table">-->
+                <!--<table width="100%" border="1" class="table table-list table-bordered table-hover">-->
+                    <!--<thead>-->
+                    <!--<tr align="center">-->
+                        <!--&lt;!&ndash;<th width="60" data-field="item">序号</th>&ndash;&gt;-->
+                        <!--<th> 学校名称</th>-->
+                        <!--<th> 年份</th>-->
+                        <!--<th> 省份</th>-->
+                        <!--<th> 录取类别</th>-->
+                        <!--<th> 科类</th>-->
+                        <!--<th> 批次</th>-->
+                        <!--<th> 专业名称</th>-->
+                        <!--<th> 录取人数</th>-->
+                        <!--<th> 最高分</th>-->
+                        <!--<th> 最低分</th>-->
+                        <!--<th> 平均分</th>-->
+                        <!--<th width="220" data-field="handler">操作</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<c:set var="i" value="0"/><c:forEach items="${list}" var="map"><c:set var="i" value="${i+1}"/>-->
+                        <!--<tr id="${map.id}" pid="">-->
+                            <!--<td width="30" align="center">-->
+                                <!--<label>-->
+                                        <!--${i}-->
+                                <!--</label>-->
+                            <!--</td>-->
+                            <!--<td> ${map.zhanghuming} </td>-->
+                            <!--<td> ${map.tiaoyinshixingming} </td>-->
+                            <!--<td> ${map.tiaoyinshixingbie} </td>-->
+                            <!--<td> ${map.fuwupingfen} </td>-->
+                            <!--<td> ${map.zhuangtai} </td>-->
+                            <!--<td> ${map.lianxishouji} </td>-->
+                            <!--<td> ${map.lianxiyouxiang} </td>-->
+                            <!--<td> ${map.jihuozhuangtai} </td>-->
+                            <!--<td><ssm:sql var="mapquyuweizhi1"-->
+                                         <!--type="find">SELECT quyumingcheng FROM quyuweizhi where id='${map.fuwuquyu}'</ssm:sql>${mapquyuweizhi1.quyumingcheng} </td>-->
+                            <!--<td><c:choose>-->
+                                <!--<c:when test="${'' == map.tiaoyinshitouxiang }">-->
+                                    <!-- -</c:when><c:otherwise><img width="100"-->
+                                                                <!--src="${map.tiaoyinshitouxiang}"/></c:otherwise></c:choose>-->
+                            <!--</td>-->
+                            <!--<td> ${Info.subStr(map.addtime , 19 , "")} </td>-->
+                            <!--<td align="center">-->
+
+
+                                <!--<a href="tiaoyinshi_detail.do?id=${map.id}">详情</a>-->
+                                <!--<c:choose>-->
+                                    <!--<c:when test="${sessionScope.cx == '管理员' }">-->
+
+                                        <!--<a href="tiaoyinshi_updt.do?id=${map.id}">编辑</a>-->
+
+                                    <!--</c:when></c:choose> <c:choose>-->
+                                <!--<c:when test="${sessionScope.cx == '管理员' }">-->
+
+                                    <!--<a href="tiaoyinshi_delete.do?id=${map.id}"-->
+                                       <!--onclick="return confirm('确定要删除？')">删除</a>-->
+
+                                <!--</c:when></c:choose>-->
+                                <!--&lt;!&ndash;qiatnalijne&ndash;&gt;-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</c:forEach>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
+
+            <!--<c:choose>-->
+                <!--<c:when test="${'管理员' == sessionScope.cx }">-->
+
+
+            <!--<div id="container" style="max-width:800px;height:400px"></div>-->
+
+
+            <!--<script>-->
+                <!--var chart = Highcharts.chart('container', {-->
+
+                    <!--chart: {-->
+                        <!--type: 'column'-->
+                    <!--},-->
+
+                    <!--title: {-->
+                        <!--text: '服务评分'-->
+                    <!--},-->
+                    <!--subtitle: {-->
+                        <!--text: ''-->
+                    <!--},-->
+
+                    <!--yAxis: {-->
+                        <!--title: {-->
+                            <!--text: '服务分',-->
+                            <!--align: 'high'-->
+                        <!--},-->
+                        <!--labels: {-->
+                            <!--overflow: 'justify'-->
+                        <!--}-->
+                    <!--},-->
+                    <!--tooltip: {-->
+                        <!--valueSuffix: ' 分'-->
+                    <!--},-->
+                    <!--xAxis: {-->
+                        <!--title: {-->
+                            <!--text: '调音师姓名'-->
+                        <!--},-->
+
+                        <!--categories: [-->
+                            <!--<c:forEach items="${listsss}" var="mp">-->
+                            <!--'${mp.tiaoyinshixingming}',-->
+                            <!--</c:forEach>-->
+
+                        <!--]-->
+
+                    <!--},-->
+                    <!--/*-->
+
+
+                    <!--legend: {-->
+                        <!--layout: 'vertical',-->
+                        <!--align: 'right',-->
+                        <!--verticalAlign: 'middle'-->
+                    <!--},-->
+                    <!--*/-->
+                    <!--plotOptions: {-->
+                        <!--series: {-->
+                            <!--label: {-->
+                                <!--connectorAllowed: false-->
+                            <!--},-->
+                            <!--// pointStart: 2010-->
+                        <!--}-->
+                    <!--},-->
+                    <!--series: [{-->
+                        <!--name: '服务评分',-->
+                        <!--data: [-->
+                            <!--<c:forEach items="${listsss}" var="mp">-->
+                            <!--${mp.fuwupingfen},-->
+                            <!--</c:forEach>-->
+                        <!--]-->
+
+                    <!--}],-->
+                    <!--responsive: {-->
+                        <!--rules: [{-->
+                            <!--condition: {-->
+                                <!--maxWidth: 500-->
+                            <!--},-->
+                            <!--chartOptions: {-->
+                                <!--legend: {-->
+                                    <!--layout: 'horizontal',-->
+                                    <!--align: 'center',-->
+                                    <!--verticalAlign: 'bottom'-->
+                                <!--}-->
+                            <!--}-->
+                        <!--}]-->
+                    <!--}-->
+                <!--});-->
+            <!--</script>-->
+
+                    <!---->
+                <!--</c:when></c:choose>-->
+        <!--</div>-->
+
+
+
+
+    <!--</div>-->
+
+
+
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

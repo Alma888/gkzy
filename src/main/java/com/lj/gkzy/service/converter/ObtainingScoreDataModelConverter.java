@@ -4,6 +4,7 @@ import com.lj.gkzy.domain.dto.ObtainingScoreDataDO;
 import com.lj.gkzy.domain.model.ObtainingScoreDataModel;
 import com.lj.gkzy.domain.vo.VolunteerRecommendVO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -17,7 +18,6 @@ import java.util.List;
  */
 @Service
 public class ObtainingScoreDataModelConverter {
-
     /**
      * Convert ObtainingScoreDataDO to ObtainingScoreDataModel
      *
@@ -171,4 +171,5 @@ public class ObtainingScoreDataModelConverter {
         obtainingScoreDataModelList.forEach(item -> result.add(convertToVolunteerRecommendVO(item)));
         return result;
     }
+
 }

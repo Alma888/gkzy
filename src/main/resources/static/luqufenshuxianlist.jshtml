@@ -1,0 +1,69 @@
+<%@ page language="java" import="dao.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*"%>
+<%@page import="util.Info"%>
+<%@ taglib prefix="ssm" uri="http://ssm" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="head.jsp" %>
+<%@ include file="header.jsp" %>
+
+
+
+<div >
+
+    
+
+<div class="container"><!-- 使用bootstrap css框架，container定宽，并剧中 https://v3.bootcss.com/css/#overview-container -->
+
+                    
+
+    
+
+<div class="title-modelbox-widget" style="margin:20px 0;padding:10px;background-color:#FFFFF1;box-shadow:0px 0px 10px 10px #B1B1B1">
+        <h3 class="section-title">
+                        调音师        </h3>
+        <div class="sidebar-widget-body">
+            
+
+    
+
+<div class="grid-box ">
+                        <div class="clearfix">
+
+        <c:forEach items="${list}" var="r">
+        <div class="grid col-md-3">
+            <div class="cate-bnr-sngle">
+                <a href="tiaoyinshidetail.do?id=${r.id}">
+                    <div class="img-box pb100">
+                        <div class="img" style="background-image: url('${r.tiaoyinshitouxiang}')"></div>
+                    </div>
+                </a>
+                <div class="cate-content text-center">
+                    <h6>${Info.subStr(r.tiaoyinshixingming, 20)}</h6>
+                    <a href="tiaoyinshidetail.do?id=${r.id}" class="shop">
+                        查看
+                    </a>
+                </div>
+            </div>
+        </div>
+        </c:forEach>
+        </div>
+    </div>
+
+
+
+
+        </div>
+        <!-- /.sidebar-widget-body -->
+    </div>
+
+
+
+        
+    
+<!-- container定宽，并剧中结束 --></div>
+
+
+
+</div>
+<%@ include file="footer.jsp" %>
+<%@ include file="foot.jsp" %>

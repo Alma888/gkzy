@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:color="http://mybatis.org/schema/mybatis-mapper"
+      xmlns:border="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<TITLE>添加院校录取分数</TITLE>
+<script src="js/jquery.validate.js"></script>
+<link rel="stylesheet" href="js/layer/theme/default/layer.css"/>
+<script src="js/layer/layer.js"></script>
+<link rel="stylesheet" href="js/umeditor/themes/default/css/umeditor.css"/>
+    <link rel="stylesheet" href="images/hsgcommon/common.css" type="text/css">
+    <link rel="stylesheet" href="images/hsgcommon/div.css" type="text/css">
+<script src="js/umeditor/umeditor.config.js"></script>
+<script src="js/umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js" charset="gb2312"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+</head>
+
+
+
+<script language="javascript">
+
+    function gows()
+    {
+        document.location.href="yuanxiaoluqufenshu_add.jsp?id=<%=id%>&yuanxiaomingcheng="+document.form1.yuanxiaomingcheng.value;
+    }
+    function hsgxia2shxurxu(nstr,nwbk)
+    {
+        if (eval("form1."+nwbk).value.indexOf(nstr)>=0)
+        {
+            eval("form1."+nwbk).value=eval("form1."+nwbk).value.replace(nstr+"；", "");
+        }
+        else
+        {
+            eval("form1."+nwbk).value=eval("form1."+nwbk).value+nstr+"；";
+        }
+    }
+</script>
+<body>
+<form action="addYuanxiaoluqufenshu.do" name="form1" method="post">
+    <table width="100%" border="1" align="center" cellpadding="3" cellspacing="1"  style="border-collapse:collapse" bgcolor="#F2FDFF">
+        <tr bgcolor="#E7E7E7">
+            <td height="30" colspan="2" background="images/table_header.gif">添加院校录取分数</td>
+        </tr>
+        <tr ><td width="200">学校名称：</td><td><input name='xuexiaomingcheng' type='text'id='xuexiaomingcheng' class="form-control" />&nbsp;*<label id='clabelyuanxiaomingcheng' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">年份：</td><td><input name='nianfen' type='text' id='nianfen' value='' onblur='checkform()' class="form-control" />&nbsp;<label id='clabelluqunianfen' style='margin-top:16px;' />必需数字型</td></tr>
+        <tr ><td width="200">省份：</td><td><input name='shengfen' type='text' id='shengfen'  class="form-control" ></td></tr>
+        <tr ><td width="200">录取类别：</td><td><input name='luquleibie' type='text' id='luquleibie' class="form-control" ></td></tr>
+        <tr ><td width="200">科类：</td><td><input name='kelei' type='text' id='kelei' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelzhiyuan' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">批次：</td><td><input name='pici' type='text' id='pici' value='' onblur='' class="form-control" /></td></tr>
+        <tr ><td width="200">专业名称：</td><td><input name='zhuanyemingcheng' type='text' id='zhuanyemingcheng' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluquzuidifen' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">录取人数：</td><td><input name='luqurenshu' type='text' id='luqurenshu' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluqurenshu' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">最高分：</td><td><input name='zuigaofen' type='text' id='zuigaofen' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluquzuigaofen' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">最低分：</td><td><input name='zuidifen' type='text' id='zuidifen' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluquzuidifen' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">平均分：</td><td><input name='pingjunfen' type='text' id='pingjunfen' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluqupingjunfen' style='margin-top:16px;' /></td></tr>
+
+
+
+        <tr align='center'   height="22">
+            <td height="45"  align="right">&nbsp;</td>
+            <td width="75%"  align="left">
+                <input type="submit" name="querenzhuce" id="querenzhuce" value="提交" onClick="return checkform();" class="btn btn-info btn-small"/>
+                <input type="reset" value="重置" name="Submit2" class="btn btn-info btn-small"/>&nbsp;
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+
+<!--<script language="javascript">-->
+    <!--document.form1.yuanxiaomingcheng.value="<%=connDbBean.readzd("yuanxiaoxinxi","yuanxiaomingcheng","yuanxiaomingcheng",request.getParameter("yuanxiaomingcheng"))%>";-->
+    <!--document.form1.yuanxiaoleixing.value="<%=connDbBean.readzd("yuanxiaoxinxi","yuanxiaoleixing","yuanxiaomingcheng",request.getParameter("yuanxiaomingcheng"))%>";-->
+    <!--document.form1.yuanxiaoxingzhi.value="<%=connDbBean.readzd("yuanxiaoxinxi","yuanxiaoxingzhi","yuanxiaomingcheng",request.getParameter("yuanxiaomingcheng"))%>";-->
+
+<!--</script>-->
+
+
+
+
+
+<script language=javascript >
+
+    function checkform(){
+
+        var yuanxiaomingchengobj = document.getElementById("yuanxiaomingcheng"); if(yuanxiaomingchengobj.value==""){document.getElementById("clabelyuanxiaomingcheng").innerHTML="&nbsp;&nbsp;<font color=red>请输入院校名称</font>";return false;}else{document.getElementById("clabelyuanxiaomingcheng").innerHTML="  "; }
+        var zhiyuanobj = document.getElementById("zhiyuan"); if(zhiyuanobj.value==""){document.getElementById("clabelzhiyuan").innerHTML="&nbsp;&nbsp;<font color=red>请输入志愿</font>";return false;}else{document.getElementById("clabelzhiyuan").innerHTML="  "; }
+        var luquzuigaofenobj = document.getElementById("luquzuigaofen"); if(luquzuigaofenobj.value==""){document.getElementById("clabelluquzuigaofen").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取最高分</font>";return false;}else{document.getElementById("clabelluquzuigaofen").innerHTML="  "; }
+        var luquzuigaofenobj = document.getElementById("luquzuigaofen"); if(luquzuigaofenobj.value!=""){ if(/^[0-9]+.?[0-9]*$/.test(luquzuigaofenobj.value)){document.getElementById("clabelluquzuigaofen").innerHTML=""; }else{document.getElementById("clabelluquzuigaofen").innerHTML="&nbsp;&nbsp;<font color=red>必需数字型</font>"; return false;}}
+        var luquzuidifenobj = document.getElementById("luquzuidifen"); if(luquzuidifenobj.value==""){document.getElementById("clabelluquzuidifen").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取最低分</font>";return false;}else{document.getElementById("clabelluquzuidifen").innerHTML="  "; }
+        var luquzuidifenobj = document.getElementById("luquzuidifen"); if(luquzuidifenobj.value!=""){ if(/^[0-9]+.?[0-9]*$/.test(luquzuidifenobj.value)){document.getElementById("clabelluquzuidifen").innerHTML=""; }else{document.getElementById("clabelluquzuidifen").innerHTML="&nbsp;&nbsp;<font color=red>必需数字型</font>"; return false;}}
+        var luqupingjunfenobj = document.getElementById("luqupingjunfen"); if(luqupingjunfenobj.value==""){document.getElementById("clabelluqupingjunfen").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取平均分</font>";return false;}else{document.getElementById("clabelluqupingjunfen").innerHTML="  "; }
+        var luqupingjunfenobj = document.getElementById("luqupingjunfen"); if(luqupingjunfenobj.value!=""){ if(/^[0-9]+.?[0-9]*$/.test(luqupingjunfenobj.value)){document.getElementById("clabelluqupingjunfen").innerHTML=""; }else{document.getElementById("clabelluqupingjunfen").innerHTML="&nbsp;&nbsp;<font color=red>必需数字型</font>"; return false;}}
+        var luqurenshuobj = document.getElementById("luqurenshu"); if(luqurenshuobj.value==""){document.getElementById("clabelluqurenshu").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取人数</font>";return false;}else{document.getElementById("clabelluqurenshu").innerHTML="  "; }
+        var luqurenshuobj = document.getElementById("luqurenshu"); if(luqurenshuobj.value!=""){ if(/^[0-9]+.?[0-9]*$/.test(luqurenshuobj.value)){document.getElementById("clabelluqurenshu").innerHTML=""; }else{document.getElementById("clabelluqurenshu").innerHTML="&nbsp;&nbsp;<font color=red>必需数字型</font>"; return false;}}
+        var luqunianfenobj = document.getElementById("luqunianfen"); if(luqunianfenobj.value!=""){ if(/^[0-9]+.?[0-9]*$/.test(luqunianfenobj.value)){document.getElementById("clabelluqunianfen").innerHTML=""; }else{document.getElementById("clabelluqunianfen").innerHTML="&nbsp;&nbsp;<font color=red>必需数字型</font>"; return false;}}
+
+
+
+        return true;
+    }
+    popheight=450;
+</script>
+<script src="images/hsgcommon/jq.js"></script>
+<script src="images/hsgcommon/common.js"></script>
+<script src="images/hsgcommon/bootbox.js"></script>
+
+
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<TITLE>添加录取分数线</TITLE>-->
+    <!--<script src="js/jquery.validate.js"></script>-->
+    <!--<link rel="stylesheet" href="js/layer/theme/default/layer.css"/>-->
+    <!--<script src="js/layer/layer.js"></script>-->
+    <!--<link rel="stylesheet" href="js/umeditor/themes/default/css/umeditor.css"/>-->
+    <!--<script src="js/umeditor/umeditor.config.js"></script>-->
+    <!--<script src="js/umeditor/umeditor.min.js"></script>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<div style="padding: 10px" class="admin-content">-->
+
+
+    <!--<div class="container">&lt;!&ndash; 使用bootstrap css框架，container定宽，并剧中 https://v3.bootcss.com/css/#overview-container &ndash;&gt;-->
+
+        <!--<div class="panel panel-default">-->
+            <!--<div class="panel-heading">-->
+                <!--添加调音师:-->
+            <!--</div>-->
+            <!--<div class="panel-body">-->
+                <!--<form action="tiaoyinshiinsert.do" method="post" name="form1" id="form1">&lt;!&ndash; form 标签开始 &ndash;&gt;-->
+
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">账户名<span-->
+                                    <!--style="color: red;">*</span></label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<input type="text" class="form-control" placeholder="输入账户名" style="width:150px;"-->
+                                       <!--data-rule-required="true" data-msg-required="请填写账户名"-->
+                                       <!--remote="checkno.do?checktype=insert&table=tiaoyinshi&col=zhanghuming"-->
+                                       <!--data-msg-remote="内容重复了" id="zhanghuming" name="zhanghuming" value=""/>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">密码<span-->
+                                    <!--style="color: red;">*</span></label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<input type="password" class="form-control" placeholder="输入密码" style="width:150px;"-->
+                                       <!--data-rule-required="true" data-msg-required="请填写密码" id="mima" name="mima"-->
+                                       <!--value=""/>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">调音师姓名</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<input type="text" class="form-control" placeholder="输入调音师姓名" style="width:150px;"-->
+                                       <!--id="tiaoyinshixingming" name="tiaoyinshixingming" value=""/>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">调音师性别</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<select class="form-control class_tiaoyinshixingbie7" data-value=""-->
+                                        <!--id="tiaoyinshixingbie" name="tiaoyinshixingbie" style="width:250px">-->
+                                    <!--<option value="男">男</option>-->
+                                    <!--<option value="女">女</option>-->
+
+                                <!--</select>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">联系手机</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<input type="text" class="form-control" placeholder="输入联系手机" style="width:150px;"-->
+                                       <!--phone="true" data-msg-phone="请输入正确手机号码" id="lianxishouji" name="lianxishouji"-->
+                                       <!--value=""/>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">联系邮箱</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<input type="text" class="form-control" placeholder="输入联系邮箱" style="width:150px;"-->
+                                       <!--email="true" data-msg-email="请输入有效邮件地址" id="lianxiyouxiang" name="lianxiyouxiang"-->
+                                       <!--value=""/>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">激活状态</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<select class="form-control class_jihuozhuangtai3" data-value="" id="jihuozhuangtai"-->
+                                        <!--name="jihuozhuangtai" style="width:250px">-->
+                                    <!--<option value="上班">上班</option>-->
+                                    <!--<option value="休息">休息</option>-->
+
+                                <!--</select>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">服务区域</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<select class="form-control class_fuwuquyu4" data-value="" id="fuwuquyu" name="fuwuquyu"-->
+                                        <!--style="width:250px">-->
+                                    <!--<ssm:sql var="select"-->
+                                             <!--type="select">SELECT * FROM quyuweizhi ORDER BY id desc</ssm:sql>-->
+                                    <!--<c:forEach items="${select}" var="m">-->
+                                        <!--<option value="${m.id}">${m.quyumingcheng}</option>-->
+                                    <!--</c:forEach>-->
+
+                                <!--</select>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">调音师头像</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<div class="input-group" style="width:250px">-->
+                                    <!--<input type="text" class="form-control" id="tiaoyinshitouxiang"-->
+                                           <!--name="tiaoyinshitouxiang" value=""/>-->
+
+                                    <!--<span class="input-group-btn"><button type="button" class="btn btn-default"-->
+                                                                          <!--onclick="layer.open({type:2,title:'上传图片',fixed:true,shadeClose:true,shade:0.5,area:['320px','150px'],content:'upload.html?result=tiaoyinshitouxiang'})">-->
+    <!--上传图片-->
+<!--</button></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs">调音师简介</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<textarea id="tiaoyinshijianjie" name="tiaoyinshijianjie"-->
+                                          <!--style="max-width: 750px;width:100%; height: 300px;"></textarea>-->
+                                <!--<script>-->
+                                    <!--(function () {-->
+                                        <!--var um = UM.getEditor('tiaoyinshijianjie');-->
+                                    <!--})();-->
+                                <!--</script>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="row">-->
+                            <!--<label style="text-align: right" class="col-sm-2 hiddex-xs"> </label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<input type="hidden" name="zhuangtai" id="zhuangtai" value="空闲中"/>-->
+                                <!--<button type="submit" class="btn btn-primary" name="Submit">-->
+                                    <!--提交-->
+                                <!--</button>-->
+                                <!--<button type="reset" class="btn btn-default" name="Submit2">-->
+                                    <!--重置-->
+                                <!--</button>-->
+
+
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;form标签结束&ndash;&gt;</form>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; container定宽，并剧中结束 &ndash;&gt;</div>-->
+
+
+    <!--<script>-->
+        <!--$(function () {-->
+            <!--$('#form1').validate();-->
+        <!--});-->
+    <!--</script>-->
+
+
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

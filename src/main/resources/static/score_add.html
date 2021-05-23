@@ -1,0 +1,245 @@
+<!doctype html>
+<head>
+
+<script src="js/jquery.validate.js"></script>
+<script src="js/datepicker/WdatePicker.js"></script>
+<script>
+    window.searchSelectUrl = "selectUpdateSearch.do";
+    window.selectUpdateUrl = "tableAjax.do?a=table";
+</script>
+<script src="js/selectUpdate.js"></script>
+
+<div style="padding: 10px" class="admin-content">
+
+
+    <div class="container"><!-- 使用bootstrap css框架，container定宽，并剧中 https://v3.bootcss.com/css/#overview-container -->
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                添加预约订单:
+            </div>
+            <div class="panel-body">
+                <form action="yuyuedingdaninsert.do" method="post" name="form1" id="form1"><!-- form 标签开始 -->
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">预约编号</label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control" placeholder="输入预约编号" style="width:150px;"
+                                       readonly="readonly" id="yuyuebianhao" name="yuyuebianhao"
+                                       value="${Info.getID()}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">预约日期</label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control"
+                                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',lang:'zh-cn'})" style="width:120px;"
+                                       id="yuyueriqi" name="yuyueriqi" readonly="readonly" value=""/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">预约时段</label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control"
+                                       onfocus="WdatePicker({dateFmt:'HH:mm',lang:'zh-cn'})" style="width:120px;"
+                                       id="yuyueshiduan" name="yuyueshiduan" readonly="readonly" value=""/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">钢琴类型</label>
+                            <div class="col-sm-10">
+
+                                <select class="form-control class_gangqinleixing5" data-value="" id="gangqinleixing"
+                                        name="gangqinleixing" style="width:250px">
+                                    <option value="立式钢琴">立式钢琴</option>
+                                    <option value="三角钢琴">三角钢琴</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">上次调音至今</label>
+                            <div class="col-sm-10">
+
+                                <select class="form-control class_shangcitiaoyinzhijin6" data-value=""
+                                        id="shangcitiaoyinzhijin" name="shangcitiaoyinzhijin" style="width:250px">
+                                    <option value="一年内">一年内</option>
+                                    <option value="二年内">二年内</option>
+                                    <option value="三年内">三年内</option>
+                                    <option value="四年以上">四年以上</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">所在区域</label>
+                            <div class="col-sm-10">
+
+                                <select class="form-control class_suozaiquyu7" data-value="" id="suozaiquyu"
+                                        name="suozaiquyu" style="width:250px">
+                                    <ssm:sql var="select"
+                                             type="select">SELECT * FROM quyuweizhi ORDER BY id desc</ssm:sql>
+                                    <c:forEach items="${select}" var="m">
+                                        <option value="${m.id}">${m.quyumingcheng}</option>
+                                    </c:forEach>
+
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">预约人信息</label>
+                            <div class="col-sm-10">
+
+                                <div class="form-inline"><select id="yuyuerenxinxi" name="yuyuerenxinxi"
+                                                                 onchange="getAjaxData('yonghu' , this.value,'yonghuming,xingming,xingbie,shouji,zhuzhi')">
+                                    <option value="">请选择预约人信息</option>
+                                    <ssm:sql var="yonghuList"
+                                             type="select">SELECT * FROM yonghu ORDER BY id desc</ssm:sql><c:forEach
+                                        items="${yonghuList}" var="tempMap">
+                                    <option value="${tempMap.id}">${tempMap.yonghuming} - ${tempMap.xingming}
+                                        - ${tempMap.xingbie} - ${tempMap.shouji} - ${tempMap.zhuzhi}</option>
+                                </c:forEach></select>
+                                    关键词：<input type="text" id="yuyuerenxinxi_keyword" value=""/><select
+                                            class="form-control class_xingbie_search8" data-value="" id="xingbie_search"
+                                            name="xingbie_search">
+                                        <option value="">请选择</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+
+                                    </select>
+                                    <button type="button" onclick="yuyuerenxinxi_select_update()">搜索</button>
+                                    <script>
+                                        function yuyuerenxinxi_select_update() {
+                                            var keyword = $('#yuyuerenxinxi_keyword').val();
+                                            var where = {};
+                                            if ($("#xingbie_search").val() != "") where.xingbie = $("#xingbie_search").val();
+                                            searchSelect('yuyuerenxinxi', 'yonghu', keyword, where, 'yonghuming,xingming,xingbie,shouji,zhuzhi'.split(','), "".split(","));
+                                        }
+                                    </script>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <td width="120">用户名</td>
+                                        <td><input type="text" class="form-control" placeholder="输入用户名"
+                                                   style="width:150px;" readonly="readonly" data-rule-required="true"
+                                                   data-msg-required="请填写用户名"
+                                                   remote="checkno.do?checktype=insert&table=yonghu&col=yonghuming"
+                                                   data-msg-remote="内容重复了" id="yonghuming" name="yonghuming" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="120">姓名</td>
+                                        <td><input type="text" class="form-control" placeholder="输入姓名"
+                                                   style="width:150px;" readonly="readonly" data-rule-required="true"
+                                                   data-msg-required="请填写姓名" id="xingming" name="xingming" value=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="120">性别</td>
+                                        <td><select class="form-control class_xingbie9" data-value=""
+                                                    readonly="readonly" id="xingbie" name="xingbie" style="width:250px">
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+
+                                        </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="120">手机</td>
+                                        <td><input type="text" class="form-control" placeholder="输入手机"
+                                                   style="width:150px;" readonly="readonly" phone="true"
+                                                   data-msg-phone="请输入正确手机号码" id="shouji" name="shouji" value=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="120">住址</td>
+                                        <td><input type="text" class="form-control" placeholder="输入住址"
+                                                   style="width:150px;" readonly="readonly" id="zhuzhi" name="zhuzhi"
+                                                   value=""/></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">预约说明</label>
+                            <div class="col-sm-10">
+
+                                <textarea style="width: 80%;height: 120px" class="form-control" placeholder="输入预约说明"
+                                          id="yuyueshuoming" name="yuyueshuoming"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs">预约人</label>
+                            <div class="col-sm-10">
+
+                                <input type="text" class="form-control" placeholder="输入预约人" style="width:150px;"
+                                       readonly="readonly" id="yuyueren" name="yuyueren"
+                                       value="${sessionScope.username}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="text-align: right" class="col-sm-2 hiddex-xs"> </label>
+                            <div class="col-sm-10">
+
+
+                                <input type="hidden" name="zhuangtai" id="zhuangtai" value="待接单"/>
+
+                                <button type="submit" class="btn btn-primary" name="Submit">
+                                    提交
+                                </button>
+                                <button type="reset" class="btn btn-default" name="Submit2">
+                                    重置
+                                </button>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--form标签结束--></form>
+            </div>
+        </div>
+
+        <!-- container定宽，并剧中结束 --></div>
+
+
+    <script>
+        $(function () {
+            $('#form1').validate();
+        });
+    </script>
+
+
+</div>
+
+</head>

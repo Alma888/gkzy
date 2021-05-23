@@ -143,6 +143,13 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.html</include>
+                    <include>**/*.css</include>
+                    <include>**/*.js</include>
+                    <include>**/*.png</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.woff</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
@@ -151,6 +158,13 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.html</include>
+                    <include>**/*.css</include>
+                    <include>**/*.js</include>
+                    <include>**/*.png</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.woff</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

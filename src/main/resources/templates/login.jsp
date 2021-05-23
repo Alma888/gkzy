@@ -1,8 +1,4 @@
-<%@ page language="java" import="dao.*" pageEncoding="UTF-8"%>
-<%@ page language="java" import="java.util.*"%>
-<%@page import="util.Info"%>
-<%@ taglib prefix="ssm" uri="http://ssm" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html  class="x-admin-sm">
 <head>
@@ -12,11 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/login.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="./js/jquery.min.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="gkzy/resources/static/css/font.css">
+    <link rel="stylesheet" href="gkzy/resources/static/css/login.css">
+    <link rel="stylesheet" href="gkzy/resources/static/css/xadmin.css">
+    <script type="text/javascript" src="gkzy/resources/static/js/jquery.min.js"></script>
+    <script src="gkzy/resources/static/lib/layui/layui.js" charset="utf-8"></script>
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -35,7 +31,6 @@
         <select name="cx" class="layui-select">
             <option value="管理员">管理员</option>  
             <option value="用户">用户</option>
-            <option value="工程师">工程师</option>
         </select>
         <hr class="hr15">
         <div class="layui-form-item">

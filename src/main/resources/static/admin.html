@@ -1,0 +1,142 @@
+<!doctype html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>高考志愿咨询服务网—管理员页</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/xadmin.css">
+    <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
+    <script src="lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        // 是否开启刷新记忆tab功能
+        var is_remember = false;
+    </script>
+</head>
+<body class="index">
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo">
+        <a href="javascript:;">高考志愿咨询-管理员</a>
+    </div>
+    <!--
+    <div class="left_open">
+        <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+    </div>
+    -->
+    <!--
+    <ul class="layui-nav left fast-add" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;">+新增</a>
+        </li>
+    </ul>
+    -->
+
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;">欢迎登录高考志愿咨询服务网</a>
+        </li>
+        <li class="layui-nav-item to-index">
+            <a href="login2.html">用户登录</a>
+        </li>
+        <li class="layui-nav-item to-index">
+            <a href="login2.html">退出</a>
+        </li>
+    </ul>
+</div>
+<ul class="layui-nav layui-nav-tree" lay-filter="test">
+    <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+    <li class="layui-nav-item layui-nav-itemed">
+        <!--<dd><a href="javascript:;">志愿推荐</a></dd>-->
+        <!--<dd><a href="showScore.html">分数线浏览</a></dd>-->
+        <dd><a href="javascript:;" data-id="1" data-title="添加录取分数线" data-url="/addFenshuxian"
+               class="site-demo-active" data-type="tabAdd">添加录取分数线</a></dd>
+        <dd><a href="javascript:;" data-id="2" data-title="展示录取分数线" data-url="/showFenshuxian"
+               class="site-demo-active" data-type="tabAdd">展示录取分数线</a></dd>
+    </li>
+</ul>
+
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<!-- 左侧菜单开始 -->
+
+<!-- <div class="x-slide_left"></div> -->
+<!-- 左侧菜单结束 -->
+<!-- 右侧主体开始 -->
+<!-- 右侧主体结束 -->
+<!-- 中部结束 -->
+<div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="margin-left: 0px;">
+    <ul class="layui-tab-title"></ul>
+    <div class="layui-tab-content"></div>
+</div>
+<script src="lib/layui/layui.all.js"></script>
+<script>
+    layui.use(['element', 'layer', 'jquery'], function () {
+        var element = layui.element;
+        // var layer = layui.layer;
+        var $ = layui.$;
+        // 配置tab实践在下面无法获取到菜单元素
+        $('.site-demo-active').on('click', function () {
+            var dataid = $(this);
+            //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
+            if ($(".layui-tab-title li[lay-id]").length <= 0) {
+                //如果比零小，则直接打开新的tab项
+                active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+            } else {
+                //否则判断该tab项是否以及存在
+                var isData = false; //初始化一个标志，为false说明未打开该tab项 为true则说明已有
+                $.each($(".layui-tab-title li[lay-id]"), function () {
+                    //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
+                    if ($(this).attr("lay-id") == dataid.attr("data-id")) {
+                        isData = true;
+                    }
+                })
+                if (isData == false) {
+                    //标志为false 新增一个tab项
+                    active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+                }
+            }
+            //最后不管是否新增tab，最后都转到要打开的选项页面上
+            active.tabChange(dataid.attr("data-id"));
+        });
+
+        var active = {
+            //在这里给active绑定几项事件，后面可通过active调用这些事件
+            tabAdd: function (url, id, name) {
+                //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
+                //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
+                element.tabAdd('demo', {
+                    title: name,
+                    content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:99%;"></iframe>',
+                    id: id //规定好的id
+                })
+                FrameWH();  //计算ifram层的大小
+            },
+            tabChange: function (id) {
+                //切换到指定Tab项
+                element.tabChange('demo', id); //根据传入的id传入到指定的tab项
+            },
+            tabDelete: function (id) {
+                element.tabDelete("demo", id);//删除
+            }
+        };
+
+        function FrameWH() {
+            var h = $(window).height();
+            $("iframe").css("height", h + "px");
+        }
+    });
+</script>
+
+</body>
+</html>

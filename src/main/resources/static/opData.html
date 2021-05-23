@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="applicable-device" content="pc,mobile">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>后台管理</title>
+    <script src="js/common.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <!--需要引入的css和js-->
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+    <script src="lib/layui/layui.all.js"></script>
+    <style>
+        .layui-laypage input{
+            margin:-1px 10px;
+        }
+        .layui-laypage .layui-laypage-skip{
+            color:black;
+        }
+        .listTop td{
+            font-weight: bold;
+            font-size: 15px;
+            background:	#DADFE6;
+        }
+        .table>tbody>tr>td{
+            line-height: 23px!important;
+        }
+        .btn{
+            width:60px!important;
+        }
+        .btn-search{
+            background-color:#4cae4c;
+            color:white;
+        }
+        .btn-empty{
+            background-color:#1b6d85;
+            color:white;
+        }
+        .btn-add{
+            color:white;
+            background-color:teal;
+        }
+    </style>
+</head>
+<body >
+<!--头部-->
+<div id="head" style="width:100%;"></div>
+<!--左侧树-->
+<div id="leftNave" style="width:200px!important">
+</div>
+<!-- 安全例会管理 -->
+<div class="inform" id="index"style="display: block;">
+    <div style="margin-top:-2px;">
+        <h1 style="text-align: center;" class="conh1">关键作业项目列表</h1>
+        <div class="baoDiv">
+            标题：<input id="workName" type="text">
+            <button class="btn btn-search" type="button" id="search" title="搜索" onclick="getPeopleList(1)">搜索</button>
+            <button class="btn btn-empty" type="button" id="emptySearch" onclick="emptySearch()">清空</button>
+            <button class="btn btn-add" type="button" id="renyuanadd" title="添加词条信息" onclick="showWorkItem()">添加</button>
+        </div>
+        <table id="workItemList" class="table-hover table-striped" style="width:100%;">
+            <tr class="listTop">
+                <td>序号</td>
+                <td>照片</td>
+                <td>标题</td>
+                <td>创建时间</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="tableContent">
+
+            </tbody>
+        </table>
+        <!--分页的底部div-->
+        <div id="pagefenye" class="fenye" style="text-align:center;margin-top: 50px"></div>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+    $(function(){
+        //引用头部的方法
+        $("#head").load("head.html");
+        //引用左侧树的方法
+        $("#leftNave").load("showScore.html");
+        getPeopleList(1);//加载分页数据
+    });
+
+    //清空搜索条件
+    function emptySearch() {
+        $("#videoTitle").val("");
+        getPeopleList(1);
+    }
+
+    //自己封装获取数据方法
+    function getPeopleList(crr){
+        $('#tableContent').text("")
+        var workName = $("#workName").val()
+        //获取数据列表
+        $.ajax({
+            url: url + '/api/score/alldata',
+            type:'post',
+            data:{
+                "curr":crr||1,
+                "workName":workName,
+            },
+            dataType:'json',
+            success:function(res){
+                if(res.pageStatus){
+                    count=res.pageVo.total;//总记录
+                    curr=res.pageVo.currentPageNo; //当前页
+                    limit=res.pageVo.pageSize; //每页几个
+                    //向页面放入数据
+
+                    //调用分页方法
+                    getPageList(count,curr,limit);
+                }else {
+                    alert("分页加载失败");
+                }
+            },
+            error:function(){
+                alert("网络故障");
+            }
+        })
+    }
+
+    //自己封装分页方法
+    function getPageList(count,curr,limit){
+        //分页方法
+        layui.use(['laypage', 'layer'], function(){
+            var laypage = layui.laypage
+                ,layer = layui.layer;
+            //完整功能
+            laypage.render({
+                elem: 'pagefenye',
+                count: count||0,
+                theme: '#009587',
+                limit : limit||3,
+                limits:[5, 10, 20, 30, 40],
+                curr : curr||1,
+                layout: ['count', 'prev', 'page', 'next',  'refresh', 'skip'],
+                jump: function(obj,first){
+                    if(!first){
+                        getPeopleList (obj.curr);
+                    }
+                }
+            });
+        });
+    }
+
+</script>

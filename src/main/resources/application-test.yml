@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9090
 
 spring:
   # 数据库连接配置
@@ -8,6 +8,7 @@ spring:
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 
 # mybatis的相关配置
 mybatis:

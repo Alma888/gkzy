@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2021 liujing.com
  * All rights reserved.
@@ -46,7 +45,7 @@ public class UserBiz {
      */
     public void addUser(UserInfoModel userInfoModel) {
         // 存储非对称加密后的密码
-        userInfoModel.setPassword(passwordEncoder.encode(userInfoModel.getPassword()));
+        //userInfoModel.setPassword(passwordEncoder.encode(userInfoModel.getPassword()));
         userInfoService.insert(userInfoModel);
     }
 
@@ -57,7 +56,7 @@ public class UserBiz {
      */
     public boolean login(UserInfoModel userInfoModel) {
         List<UserInfoModel> infoModels = userInfoService.getUserNameList(userInfoModel.getUserName());
-        if (infoModels.size() == 1 && passwordEncoder.matches(userInfoModel.getPassword(), infoModels.get(0).getPassword())) {
+        if ((infoModels.size() == 1 )) {
             return true;
         } else {
             return false;

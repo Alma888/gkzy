@@ -15,7 +15,7 @@ import java.util.List;
  * @since 2021-04-03 13:58:43
  */
 
-@Repository
+
 public interface ObtainingScoreDataDao  {
 
     /**

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <TITLE>修改院校录取分数</TITLE>
+
+    <link rel="stylesheet" href="images/hsgcommon/common.css" type="text/css">
+    <link rel="stylesheet" href="images/hsgcommon/div.css" type="text/css">
+
+</head>
+
+<!--<script language="javascript">-->
+
+    <!--function gows()-->
+    <!--{-->
+        <!--document.location.href="yuanxiaoluqufenshu_add.jsp?id=<%=id%>";-->
+    <!--}-->
+    <!--function hsgxia2shxurxu(nstr,nwbk)-->
+    <!--{-->
+        <!--if (eval("form1."+nwbk).value.indexOf(nstr)>=0)-->
+        <!--{-->
+            <!--eval("form1."+nwbk).value=eval("form1."+nwbk).value.replace(nstr+"；", "");-->
+        <!--}-->
+        <!--else-->
+        <!--{-->
+            <!--eval("form1."+nwbk).value=eval("form1."+nwbk).value+nstr+"；";-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
+
+<body>
+<form action="updateYuanxiaoluqufenshu.do" name="form1" method="post">
+    <table width="100%" border="1" align="center" cellpadding="3" cellspacing="1"  style="border-collapse:collapse" bgcolor="#F2FDFF">
+        <tr bgcolor="#E7E7E7">
+            <td height="30" colspan="2" background="images/table_header.gif">修改院校录取分数<input type="hidden" name="id" value="${yuanxiaoluqufenshu.id}" /></td>
+        </tr>
+        <tr ><td width="200">院校名称：</td><td><select name='yuanxiaomingcheng' id='yuanxiaomingcheng' class="form-control" onChange='gows();'><%=connDbBean.hsggetoption2("yuanxiaoxinxi","yuanxiaomingcheng")%></select>&nbsp;*<label id='clabelyuanxiaomingcheng' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">院校类型：</td><td><input name='yuanxiaoleixing' type='text' id='yuanxiaoleixing'  class="form-control" ></td></tr>
+        <tr ><td width="200">院校性质：</td><td><input name='yuanxiaoxingzhi' type='text' id='yuanxiaoxingzhi'  class="form-control" ></td></tr>
+        <tr ><td width="200">考生类别：</td><td><select name='kaoshengleibie' id='kaoshengleibie' style=' height:19px; border:solid 1px #000000; color:#666666'><%=connDbBean.hsggetoption("kaoshengleibieguanli","kaoshengleibie")%></select></td></tr>
+        <tr ><td width="200">志愿：</td><td><input name='zhiyuan' type='text' id='zhiyuan' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelzhiyuan' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">录取最高分：</td><td><input name='luquzuigaofen' type='text' id='luquzuigaofen' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluquzuigaofen' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">录取最低分：</td><td><input name='luquzuidifen' type='text' id='luquzuidifen' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluquzuidifen' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">录取平均分：</td><td><input name='luqupingjunfen' type='text' id='luqupingjunfen' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluqupingjunfen' style='margin-top:16px;' /></td></tr>
+        <tr ><td width="200">录取人数：</td><td><input name='luqurenshu' type='text' id='luqurenshu' value='' onblur='checkform()' class="form-control" />&nbsp;*<label id='clabelluqurenshu' style='margin-top:16px;' /></td></tr>
+        <tr 0><td width="200">录取批次：</td><td><input name='luqupici' type='text' id='luqupici' value='' onblur='' class="form-control" /></td></tr>
+        <tr 1><td width="200">录取年份：</td><td><input name='luqunianfen' type='text' id='luqunianfen' value='' onblur='checkform()' class="form-control" />&nbsp;<label id='clabelluqunianfen' style='margin-top:16px;' />必需数字型</td></tr>
+        <tr 2><td width="200">备注：</td><td><textarea name='beizhu' cols='50' rows='5' id='beizhu' onblur='' class="form-control" style="width:600px; height:80px;" ></textarea></td></tr>
+
+
+        <tr align='center'   height="22">
+            <td width="25%" height="45"  align="right">&nbsp;						    </td>
+            <td width="75%"  align="left">
+                <input type="submit" name="querenzhuce" id="querenzhuce" value="提交" onClick="return checkform();" class="btn btn-info btn-small" />
+                <input type="reset" value="重置" class="btn btn-info btn-small" />&nbsp;
+            </td>
+        </tr>
+        <script language="javascript">document.form1.yuanxiaomingcheng.value='${yuanxiaoluqufenshu.yuanxiaomingcheng}';</script>
+        <script language="javascript">document.form1.yuanxiaoleixing.value='${yuanxiaoluqufenshu.yuanxiaoleixing}';</script>
+        <script language="javascript">document.form1.yuanxiaoxingzhi.value='${yuanxiaoluqufenshu.yuanxiaoxingzhi}';</script>
+        <script language="javascript">document.form1.kaoshengleibie.value='${yuanxiaoluqufenshu.kaoshengleibie}';</script>
+        <script language="javascript">document.form1.zhiyuan.value='${yuanxiaoluqufenshu.zhiyuan}';</script>
+        <script language="javascript">document.form1.luquzuigaofen.value='${yuanxiaoluqufenshu.luquzuigaofen}';</script>
+        <script language="javascript">document.form1.luquzuidifen.value='${yuanxiaoluqufenshu.luquzuidifen}';</script>
+        <script language="javascript">document.form1.luqupingjunfen.value='${yuanxiaoluqufenshu.luqupingjunfen}';</script>
+        <script language="javascript">document.form1.luqurenshu.value='${yuanxiaoluqufenshu.luqurenshu}';</script>
+        <script language="javascript">document.form1.luqupici.value='${yuanxiaoluqufenshu.luqupici}';</script>
+        <script language="javascript">document.form1.luqunianfen.value='${yuanxiaoluqufenshu.luqunianfen}';</script>
+        <script language="javascript">document.form1.beizhu.value='${yuanxiaoluqufenshu.beizhu}';</script>
+
+    </table>
+</form>
+</body>
+</html>
+
+
+
+
+
+
+<script language=javascript >
+
+    function checkform(){
+
+        var yuanxiaomingchengobj = document.getElementById("yuanxiaomingcheng"); if(yuanxiaomingchengobj.value==""){document.getElementById("clabelyuanxiaomingcheng").innerHTML="&nbsp;&nbsp;<font color=red>请输入院校名称</font>";return false;}else{document.getElementById("clabelyuanxiaomingcheng").innerHTML="  "; }
+        var zhiyuanobj = document.getElementById("zhiyuan"); if(zhiyuanobj.value==""){document.getElementById("clabelzhiyuan").innerHTML="&nbsp;&nbsp;<font color=red>请输入志愿</font>";return false;}else{document.getElementById("clabelzhiyuan").innerHTML="  "; }
+        var luquzuigaofenobj = document.getElementById("luquzuigaofen"); if(luquzuigaofenobj.value==""){document.getElementById("clabelluquzuigaofen").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取最高分</font>";return false;}else{document.getElementById("clabelluquzuigaofen").innerHTML="  "; }
+
+        var luquzuidifenobj = document.getElementById("luquzuidifen"); if(luquzuidifenobj.value==""){document.getElementById("clabelluquzuidifen").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取最低分</font>";return false;}else{document.getElementById("clabelluquzuidifen").innerHTML="  "; }
+
+        var luqupingjunfenobj = document.getElementById("luqupingjunfen"); if(luqupingjunfenobj.value==""){document.getElementById("clabelluqupingjunfen").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取平均分</font>";return false;}else{document.getElementById("clabelluqupingjunfen").innerHTML="  "; }
+
+        var luqurenshuobj = document.getElementById("luqurenshu"); if(luqurenshuobj.value==""){document.getElementById("clabelluqurenshu").innerHTML="&nbsp;&nbsp;<font color=red>请输入录取人数</font>";return false;}else{document.getElementById("clabelluqurenshu").innerHTML="  "; }
+
+
+
+
+
+        return true;
+    }
+    popheight=450;
+</script>

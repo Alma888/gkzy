@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>院校录取分数</title>
+    <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js" charset="gb2312"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+
+</head>
+<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js" charset="gb2312"></script>
+
+<%
+
+%>
+
+<body>
+<jsp:include page="qttop.jsp"></jsp:include>
+<jsp:include page="bht.jsp"></jsp:include>
+<section id="introduce">
+    <div class="container">
+        <div class="head text-center">
+            <h3>院校录取分数</h3>
+        </div>
+
+
+        <form action="yxlqfsList.do" name="myform" method="post" style="width:100%">
+            查询   院校名称：<input name="yuanxiaomingcheng" type="text" id="yuanxiaomingcheng" class="form-control2" />  院校类型：<input name="yuanxiaoleixing" type="text" id="yuanxiaoleixing" class="form-control2" />  院校性质：<input name="yuanxiaoxingzhi" type="text" id="yuanxiaoxingzhi" class="form-control2" /> 考生类别：<select name='kaoshengleibie' id='kaoshengleibie' class="form-control2"><option value="">所有</option><%=connDbBean.hsggetoption("kaoshengleibieguanli","kaoshengleibie")%></select>  志愿：<input name="zhiyuan" type="text" id="zhiyuan" class="form-control2" />  录取最高分：<input name="luquzuigaofen" type="text" id="luquzuigaofen" class="form-control2" />  录取人数：<input name="luqurenshu" type="text" id="luqurenshu" class="form-control2" />  录取批次：<input name="luqupici" type="text" id="luqupici" class="form-control2" />  录取年份：<input name="luqunianfen" type="text" id="luqunianfen" class="form-control2" />
+            <input type="submit" value="查询" />
+        </form>
+
+
+        <br />
+        <table width="100%" border="0" align="center" cellpadding="4" cellspacing="1" bgcolor="#ebf0f7">
+            <tr>
+                <td align="center" bgcolor="#ebf0f7" width="30px">序号</td>
+                <td bgcolor='#ebf0f7'>院校名称</td>
+                <td bgcolor='#ebf0f7'>院校类型</td>
+                <td bgcolor='#ebf0f7'>院校性质</td>
+                <td bgcolor='#ebf0f7'>考生类别</td>
+                <td bgcolor='#ebf0f7'>志愿</td>
+                <td bgcolor='#ebf0f7'>录取最高分</td>
+                <td bgcolor='#ebf0f7'>录取最低分</td>
+                <td bgcolor='#ebf0f7'>录取平均分</td>
+                <td bgcolor='#ebf0f7'>录取人数</td>
+                <td bgcolor='#ebf0f7'>录取批次</td>
+                <td bgcolor='#ebf0f7'>录取年份</td>
+
+
+
+                <td align="center" bgcolor="#ebf0f7" width="50px"> 操作 </td>
+            </tr>
+            <%
+            int i=0;
+            %>
+            <c:forEach items="${list}" var="u">
+                <%
+                i++;
+                %>
+                <tr align="center" bgcolor="#FFFFFF">
+                    <td align="center"><%=i%></td>
+                    <td>${u.yuanxiaomingcheng}</td>
+                    <td>${u.yuanxiaoleixing}</td>
+                    <td>${u.yuanxiaoxingzhi}</td>
+                    <td>${u.kaoshengleibie}</td>
+                    <td>${u.zhiyuan}</td>
+                    <td>${u.luquzuigaofen}</td>
+                    <td>${u.luquzuidifen}</td>
+                    <td>${u.luqupingjunfen}</td>
+                    <td>${u.luqurenshu}</td>
+                    <td>${u.luqupici}</td>
+                    <td>${u.luqunianfen}</td>
+
+
+
+                    <td align="center"><a href="yxlqfsDetail.do?id=${u.id}">详细</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+        <br>
+
+        <p align="center"> <c:if test="${sessionScope.p==1 }">
+            <c:if test="${page.page>1}">
+                <a href="yxlqfsList.do?page=1" >首页</a>
+                <a href="yxlqfsList.do?page=${page.page-1 }"> 上一页</a>             </c:if>
+            <c:if test="${page.page<page.totalPage}">
+                <a href="yxlqfsList.do?page=${page.page+1 }">下一页</a>
+                <a href="yxlqfsList.do?page=${page.totalPage }">末页</a>		    </c:if>
+        </c:if>
+        </p>
+
+
+
+
+
+    </div>
+</section>
+<jsp:include page="qtdown.jsp"></jsp:include>
+<jsp:include page="qtuserlog.jsp"></jsp:include>
+<script src="qtimages/lib/jquery/jquery.min.js"></script>
+<script src="qtimages/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="qtimages/js/index.js"></script>
+
+</body>
+</html>
