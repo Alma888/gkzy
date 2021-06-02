@@ -138,17 +138,30 @@
     </select>
 
     <select id="pageData" resultMap="ObtainingScoreDataMap">
+<!--        select <include refid="allColumn"/>-->
+<!--        from college_entrance_examination_volunteer_consultation.obtaining_score_data-->
+<!--        where (school_name, the_name_of_the_professional, lowest_score) in (-->
+<!--        select school_name, the_name_of_the_professional, min(lowest_score) as lowest_score-->
+<!--        from college_entrance_examination_volunteer_consultation.obtaining_score_data-->
+<!--        group by school_name, the_name_of_the_professional-->
+<!--        )-->
         select <include refid="allColumn"/>
         from college_entrance_examination_volunteer_consultation.obtaining_score_data
-        where (school_name, the_name_of_the_professional, lowest_score) in (
-        select school_name, the_name_of_the_professional, min(lowest_score) as lowest_score
-        from college_entrance_examination_volunteer_consultation.obtaining_score_data
-        group by school_name, the_name_of_the_professional
-        )
+        <where>
+            <if test="schoolName != null and schoolName != ''">
+                and school_name = #{schoolName}
+            </if>
+            <if test="year != null and year != ''">
+                and year = #{year}
+            </if>
+            <if test="provinces != null and provinces != ''">
+                and provinces = #{provinces}
+            </if>
+        </where>
         limit #{offset}, #{limit}
     </select>
     <select id="totalPageData" resultType="java.lang.Integer">
-        select <include refid="allColumn"/>
+        select count(*)
         from obtaining_score_data
         group by school_name, the_name_of_the_professional;
     </select>
